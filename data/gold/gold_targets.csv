@@ -1,0 +1,20 @@
+ticker,scope,base_year,target_year,reduction_pct,pdf_page,row_text
+AI,1+2,2020,2035,33,319,a clear milestone in 2035 with a -33% reduction in Scope 1 and 2 emissions compared to the baseline of 2020
+AIR,1+2,2015,2030,63,164,"Gross market-based ktCO2eq 1,277 615 622 473 -63%"
+BN,1+2,2020,2030,46.3,334,reduce absolute scope 1 and 2 GHG emissions by 46.3% by 2030 from a 2020 base year
+BN,3,2020,2030,42,334,reduce absolute scope 3 GHG emissions by 42% by 2030 from a 2020 base year
+BN,1+3,2020,2030,30.3,334,reduce absolute scope 1 and 3 Forest Land and Agriculture (FLAG) GHG emissions by 30.3% by 2030 from a 2020 base year
+CAP,1+2,2019,2030,80,199,"Absolute Scope 1 and 2 emissions (market based) 154,078 11,159 8,747√ -21.6% -80% absolute"
+CAP,1+2+3,2019,2040,90,186,"90% absolute reduction across our Scope 1, 2 and 3 emissions by 2040, against a 2019 baseline"
+CS,1+2,2019,2030,60,176,"By the end of 2030, AXA aims to reduce its Scope 1 and Scope 2 emissions (in tons of CO2 equivalent) by 60% compared to 2019"
+MC,1+2,2023,2030,68,70,68% reduction in energy‑related GHG emissions (in absolute value) for the Group (Scopes 1 and 2) between 2023 and 2030
+MC,3,2023,2030,23,70,"32.5% reduction in absolute Scope 3 energy and industry emissions between 2023 and 2033, equating to a 23% reduction between 2023 and 2030"
+OR,1+2,2019,2030,57,212,"By 2030, L'Oréal is aiming to reduce its Scopes 1 & 2 carbon emissions by 57%, compared to 2019"
+OR,3,2019,2030,28,212,"By 2030, L'Oréal is aiming to reduce its Scope 3 carbon emissions (from purchased goods and services, upstream transportation and distribution and business travel) by 28%, compared to 2019"
+OR,1+2+3,2019,2050,90,212,"By 2050, L'Oréal is aiming to reduce its Scopes 1, 2 & 3 carbon emissions by 90%, compared to 2019"
+ORA,1+2+3,2020,2030,45,380,reducing GHG emissions in all three scopes by 45% in 2030 compared with the 2020 level
+RNO,1+2,2019,2030,67,138,"For the Industrial scope (absolute scope 1 and 2), the trajectory improved by 12 percentage points compared with 2024, against a 2030 target of 67%"
+SAN,1+2,2019,2030,55,160,Scopes 1 et 2 Absolu -55 % 2030
+SAN,3,2019,2030,30,160,Scope 3 Absolu -30 % 2030
+SAN,1+2+3,2019,2045,90,160,"Scopes 1, 2 et 3 Absolu -90 % 2045"
+TTE,1+2,2015,2030,40,347,"By 2030, reduce by 40% net(1) Scope 1+2 GHG emissions relative to 2015 for operated activities"

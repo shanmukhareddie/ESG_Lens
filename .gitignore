@@ -3,5 +3,6 @@
 data/raw/
 __pycache__/
 .venv/
-# macOS folder metadata
 .DS_Store
+data/llm_cache/
+.pytest_cache/

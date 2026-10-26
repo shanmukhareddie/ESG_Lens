@@ -1,0 +1,10 @@
+pandas
+numpy
+pymupdf
+pyyaml
+pydantic
+python-dotenv
+groq
+psycopg[binary]
+yfinance
+pytest

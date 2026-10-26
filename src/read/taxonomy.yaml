@@ -1,0 +1,125 @@
+# Canonical GHG metrics extracted by ESG Lens (ESRS E1-6).
+#
+# Each metric has:
+#   esrs         the ESRS datapoint it maps to
+#   unit         canonical unit after conversion (all values stored in tCO2e)
+#   description  plain-English definition
+#   labels_seen  real row labels from the FY2025 reports (gold-set companies)
+#   not_this     look-alike rows that must NOT be taken for this metric
+#   rules        regexes used by the rules baseline, matched on a lower-cased,
+#                accent-free label: every `include` must match, no `exclude` may match
+
+ghg_scope1:
+  esrs: "E1-6 §44(a)"
+  unit: tCO2e
+  description: Gross Scope 1 GHG emissions (direct emissions from owned or controlled sources)
+  labels_seen:
+    - "Gross Scope 1 GHG emissions"                      # Airbus, L'Oréal, Capgemini
+    - "Scope 1 Gross GHG Emissions (tCO2e)"              # BNP Paribas
+    - "Scope 1"                                          # LVMH
+    - "Gross Scope 1 GHG emissions a+b+c"                # TotalEnergies
+    - "Émissions brutes de scope 1 location-based"       # Sanofi (French)
+  not_this:
+    - "Percentage of Scope 1 GHG emissions from regulated emission trading schemes"
+    - "Biogenic CO2 emissions excluded from Scope 1"
+    - "Scope 1 market-based (with biomethane certificates)"   # Sanofi; gross Scope 1 has no instruments
+    - "Scope 1 and 2 / Scope 1 + Scope 2"
+  rules:
+    include: ['\bscope\s?1\b']
+    exclude: ['scopes?\s?1\s?(\+|&|and|et|,)\s?(scopes?\s?)?[23]', '\bscope\s?[23]\b', 'flag\b', 'percent|pourcentage|%|share',
+              'biogeni', 'intensit|\bper\b|\bpar (chiffre|salari)', 'market.based|instrument', 'target|objectif',
+              'not included|non inclu']
+
+ghg_scope2_location:
+  esrs: "E1-6 §44(b)"
+  unit: tCO2e
+  description: Gross location-based Scope 2 GHG emissions (purchased energy, grid-average factors)
+  labels_seen:
+    - "Gross location-based Scope 2 GHG emissions"       # Airbus, Danone, Renault
+    - "Scope 2 location-based Gross GHG emissions"       # BNP Paribas
+    - "Scope 2 (location-based)"                         # LVMH
+    - "Gross GHG emissions from scope 2 (location based)"  # Orange
+    - "Émissions brutes de GES de scope 2 location-based"  # Sanofi (French)
+  not_this:
+    - "Scope 1 + Scope 2 location-based"
+    - "Total GHG emissions (location-based)"
+  rules:
+    include: ['\bscope\s?2\b', 'location|localisation']
+    exclude: ['market|marche', 'scopes?\s?1\s?(\+|&|and|et|,)', '\bscope\s?[13]\b', 'intensit|\bper\b', 'percent|%']
+
+ghg_scope2_market:
+  esrs: "E1-6 §44(b)"
+  unit: tCO2e
+  description: Gross market-based Scope 2 GHG emissions (purchased energy, contract-specific factors)
+  labels_seen:
+    - "Gross market-based Scope 2 GHG emissions"         # Airbus, Danone, Renault
+    - "Scope 2 market-based Gross GHG emissions"         # BNP Paribas
+    - "Scope 2 (market-based)"                           # LVMH
+    - "Gross GHG emissions from scope 2 (market based)"  # Orange
+    - "Émissions brutes de GES de scope 2 market-based"  # Sanofi (French)
+  not_this:
+    - "Scope 1 + Scope 2 market-based"
+    - "Percentage of contractual instruments, Scope 2 GHG emissions"
+  rules:
+    include: ['\bscope\s?2\b', 'market|marche']
+    exclude: ['location|localisation', 'scopes?\s?1\s?(\+|&|and|et|,)', '\bscope\s?[13]\b', 'intensit|\bper\b',
+              'percent|%|share|contractual instruments']
+
+ghg_scope3:
+  esrs: "E1-6 §44(c)"
+  unit: tCO2e
+  description: Total gross indirect (Scope 3) GHG emissions across all reported categories
+  labels_seen:
+    - "Total Gross indirect (Scope 3) GHG emissions"     # Air Liquide, Airbus, Capgemini
+    - "TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS"     # AXA, Danone
+    - "Total Scope 3 GHG emissions"                      # L'Oréal
+    - "Gross scope 3 GHG emissions"                      # Renault
+    - "Scope 3"                                          # LVMH
+    - "Gross GHG emissions from scope 3 (market based)"  # Orange (reports a location and a market variant)
+    - "Total des émissions indirectes brutes (ESRS Scope 3)"  # Sanofi (French)
+  not_this:
+    - "1 Purchased goods and services ... 15 Investments (the 15 category rows)"
+    - "Subtotal upstream / downstream Scope 3"
+    - "Scope 3 FLAG / Scope 3 E&I sub-totals"            # LVMH
+    - "Scope 3 linked to the transition plan"            # Sanofi (narrower perimeter)
+  rules:
+    include: ['\bscope\s?3\b|indirect']
+    exclude: ['categor|\bcat\b', 'upstream|downstream|amont|aval|subtotal|sous-total', 'purchased|achats', 'flag\b|e&i',
+              'scopes?\s?[12]\s?(\+|&|and|et|,)', '\bscope\s?[12]\b', 'intensit|\bper\b', 'percent|%|primary data',
+              'transition|biogeni|target|objectif']
+
+ghg_total_location:
+  esrs: "E1-6 §44(d)"
+  unit: tCO2e
+  description: Total GHG emissions = Scope 1 + location-based Scope 2 + Scope 3
+  labels_seen:
+    - "Total GHG emissions (location-based)"             # most companies
+    - "Total (location-based)"                           # LVMH
+    - "Total location based GHG emissions"               # Renault
+    - "Gross GHG emissions from scope 1, 2 and 3 (location based)"  # Orange
+    - "Émissions totales de GES (location-based)"        # Sanofi (French)
+  not_this:
+    - "Total GHG emissions (location-based) per net revenue"   # an intensity
+    - "Total Scope 2 location-based"
+  rules:
+    include: ['\btota|scopes?\s?1\s?,\s?2\s?(and|et|&)\s?3', 'location|localisation']
+    exclude: ['market|marche', 'intensit|\bper\b|\bpar\b|revenue|chiffre', 'percent|%',
+              '\bscope\s?[12]\b(?!\s?,)(?!.*\b3\b)']
+
+ghg_total_market:
+  esrs: "E1-6 §44(d)"
+  unit: tCO2e
+  description: Total GHG emissions = Scope 1 + market-based Scope 2 + Scope 3
+  labels_seen:
+    - "Total GHG emissions (market-based)"               # most companies
+    - "Total (market-based)"                             # LVMH
+    - "Total market based GHG emissions"                 # Renault
+    - "Gross GHG emissions from scope 1, 2 and 3 (market based)"  # Orange
+    - "Émissions totales de GES (market-based)"          # Sanofi (French)
+  not_this:
+    - "Total GHG emissions (market-based) per net revenue"     # an intensity
+    - "Total Scope 1 and 2 market-based"
+  rules:
+    include: ['\btota|scopes?\s?1\s?,\s?2\s?(and|et|&)\s?3', 'market|marche']
+    exclude: ['location|localisation', 'intensit|\bper\b|\bpar\b|revenue|chiffre', 'percent|%',
+              '\bscope\s?[12]\b(?!\s?,)(?!.*\b3\b)']
