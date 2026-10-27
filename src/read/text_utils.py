@@ -1,12 +1,15 @@
 """Text helpers shared by the extraction and validation code."""
 
+import itertools
 import re
+import statistics
 import unicodedata
+from dataclasses import dataclass
 
 import yaml
 
-SPACES = "    "                          # non-breaking and thin spaces
-DASHES = "‐‑‒–—−"              # hyphens, en/em dash, minus sign
+SPACES = "\u00a0\u202f\u2009\u2007"                          # non-breaking and thin spaces
+DASHES = "\u2010\u2011\u2012\u2013\u2014\u2212"              # hyphens, en/em dash, minus sign
 TAXONOMY_PATH = "src/read/taxonomy.yaml"
 
 
@@ -20,6 +23,7 @@ def normalize(text: str) -> str:
     for s in SPACES:
         text = text.replace(s, " ")
     text = re.sub(r"(?i)co\s+2\b", "co2", text)   # "tCO 2 e" when the subscript is a separate word
+    text = re.sub(r"(?i)\b(t|kt|mt)co\s+(e|eq)\b", r"\1co2\2", text)   # "tCO e" when the subscript was dropped
     return re.sub(r"\s+", " ", text).strip().lower()
 
 
@@ -99,3 +103,47 @@ def load_taxonomy(path: str = TAXONOMY_PATH) -> dict:
 def label_matches(rules: dict, label: str) -> bool:
     t = normalize(label)
     return all(re.search(p, t) for p in rules["include"]) and not any(re.search(p, t) for p in rules["exclude"])
+
+
+@dataclass
+class Word:
+    x0: float
+    y0: float
+    x1: float
+    y1: float
+    text: str
+
+    @property
+    def middle(self) -> float:
+        return (self.x0 + self.x1) / 2
+
+    @property
+    def yc(self) -> float:
+        return (self.y0 + self.y1) / 2
+
+
+def read_lines(page) -> list[list[Word]]:
+    """Group the words of a page into visual lines, left to right."""
+    words = [Word(*w[:5]) for w in page.get_text("words") if w[4].strip()]
+    if not words:
+        return []
+    tolerance = 0.45 * statistics.median(w.y1 - w.y0 for w in words)
+    lines: list[list[Word]] = []
+    for w in sorted(words, key=lambda w: (w.yc, w.x0)):
+        if lines and abs(w.yc - statistics.fmean(x.yc for x in lines[-1])) <= tolerance:
+            lines[-1].append(w)
+        else:
+            lines.append([w])
+    return [sorted(line, key=lambda w: w.x0) for line in lines]
+
+
+def layout_text(page, column_gap: float = 8) -> str:
+    """Page text with each visual line kept together and ' | ' between table columns,
+    so a reader can still see which figure sits under which year."""
+    out = []
+    for line in read_lines(page):
+        parts = [line[0].text]
+        for prev, w in itertools.pairwise(line):
+            parts.append((" | " if w.x0 - prev.x1 > column_gap else " ") + w.text)
+        out.append("".join(parts))
+    return "\n".join(out)

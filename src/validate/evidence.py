@@ -35,8 +35,8 @@ def page_text(ticker: str, page: int) -> str | None:
 
 
 def words(text: str) -> list[str]:
-    # PDFs store the subscript of "tCO₂" apart from the word, so compare "co2" as "co"
-    return WORD.findall(normalize(text).replace("co2", "co"))
+    # the subscript of "tCO2" is often stored apart from the word, or lost: compare "co2" as "co"
+    return WORD.findall(normalize(text).replace("co2", "co "))
 
 
 def quote_on_page(quote: str, text: str) -> bool:

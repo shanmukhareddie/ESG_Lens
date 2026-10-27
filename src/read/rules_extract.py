@@ -9,57 +9,31 @@ Usage:
 """
 
 import re
-import statistics
-from dataclasses import dataclass
 from pathlib import Path
 
 import pandas as pd
 import pymupdf
 
 from src.read.find_pages import RAW, SOURCES, rank_pages
-from src.read.text_utils import dominant_unit_scale, label_matches, load_taxonomy, parse_number, unit_scale
+from src.read.text_utils import (
+    Word,
+    dominant_unit_scale,
+    label_matches,
+    load_taxonomy,
+    parse_number,
+    read_lines,
+    unit_scale,
+)
 
 OUT = Path("data/processed/rules_extractions.csv")
 YEARS = (2024, 2025)
 TAXONOMY = load_taxonomy()
 
-YEAR = re.compile(r"^\(?(?:FY\s?|\d{1,2}/\d{1,2}/)?(20[1-3]\d)\)?(?:\s?\(\w\))?\*?$", re.I)
+YEAR = re.compile(r"^\(?(?:FY\s?|\d{1,2}/\d{1,2}/)?(20[1-3]\d)\)?(?:\s?\(\w\))?\*?$", re.IGNORECASE)
 UNIT_TEXT = re.compile(
     r"(?i)(1,000 x tons? of co\s?2\s?e|thousands? of (metric )?(tonnes|tons)( of co2e?)?|milliers de tonnes"
     r"|million (tons|tonnes) of co2-?eq|mt co2 ?eq\.?|kt ?co2 ?eq|ktco2e?|t ?eq ?co2|tco2 ?e?q?|tco2-eq|tonnes co2e?)"
 )
-
-
-@dataclass
-class Word:
-    x0: float
-    y0: float
-    x1: float
-    y1: float
-    text: str
-
-    @property
-    def middle(self) -> float:
-        return (self.x0 + self.x1) / 2
-
-    @property
-    def yc(self) -> float:
-        return (self.y0 + self.y1) / 2
-
-
-def read_lines(page) -> list[list[Word]]:
-    """Group the words of a page into visual lines, left to right."""
-    words = [Word(*w[:5]) for w in page.get_text("words") if w[4].strip()]
-    if not words:
-        return []
-    tolerance = 0.45 * statistics.median(w.y1 - w.y0 for w in words)
-    lines: list[list[Word]] = []
-    for w in sorted(words, key=lambda w: (w.yc, w.x0)):
-        if lines and abs(w.yc - statistics.fmean(x.yc for x in lines[-1])) <= tolerance:
-            lines[-1].append(w)
-        else:
-            lines.append([w])
-    return [sorted(line, key=lambda w: w.x0) for line in lines]
 
 
 def is_part_of_label(prev: Word | None, w: Word) -> bool:
@@ -92,7 +66,7 @@ def figures(line: list[Word], decimal: str) -> list[tuple[Word, float]]:
 def year_columns(line: list[Word]) -> list[tuple[int, Word]]:
     columns = []
     for w in line:
-        m = YEAR.match(re.sub(r"[   ]", " ", w.text))
+        m = YEAR.match(re.sub(r"[\u2009\u202f\u00a0]", " ", w.text))
         if m:
             columns.append((int(m.group(1)), w))
     return columns

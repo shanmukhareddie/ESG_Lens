@@ -33,3 +33,17 @@ def test_page_unit_is_the_most_mentioned_one():
 
 def test_normalize_handles_accents_dashes_and_subscripts():
     assert normalize("Émissions tCO 2 e location‑based") == "emissions tco2 e location-based"
+
+
+def test_dropped_subscript_unit_is_still_recognised():
+    assert unit_scale("tCO e") == 1 and unit_scale("ktCO eq") == 1e3
+    assert unit_scale("tons of CO e") is None     # too vague to trust
+
+
+def test_layout_text_keeps_rows_and_marks_columns(report):
+    import pymupdf
+
+    from src.read.text_utils import layout_text
+    with pymupdf.open(report) as doc:
+        text = layout_text(doc[0])
+    assert "Gross Scope 1 GHG emissions | 1,234 | 1,500 | -18%" in text

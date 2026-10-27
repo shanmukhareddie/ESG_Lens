@@ -28,7 +28,7 @@ MENTIONS = [
     r"total.{0,40}location|location.{0,40}total",
     r"total.{0,40}market|market.{0,40}total",
 ]
-BIG_NUMBER = re.compile(r"\b\d{1,3}(?:[ ,. ]\d{3})+\b")
+BIG_NUMBER = re.compile(r"\b\d{1,3}(?:[ ,.\u202f]\d{3})+\b")
 
 
 def score_page(text: str) -> int:
