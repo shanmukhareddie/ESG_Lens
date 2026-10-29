@@ -18,3 +18,10 @@ SAN,1+2,2019,2030,55,160,Scopes 1 et 2 Absolu -55 % 2030
 SAN,3,2019,2030,30,160,Scope 3 Absolu -30 % 2030
 SAN,1+2+3,2019,2045,90,160,"Scopes 1, 2 et 3 Absolu -90 % 2045"
 TTE,1+2,2015,2030,40,347,"By 2030, reduce by 40% net(1) Scope 1+2 GHG emissions relative to 2015 for operated activities"
+CAP,1+2,2019,2040,90,186,Absolute Scope 1 and 2 emissions (market based) -80% absolute (2030) -90% absolute (2040) SBTi Corporate Net-Zero Standard
+CAP,3,2019,2030,50,186,Scope 3 purchased goods and services -50% absolute (2030) -90% absolute (2040) SBTi Corporate Net-Zero Standard
+MC,3,2023,2033,32.5,70,32.5% reduction in absolute Scope 3 energy and industry emissions between 2023 and 2033
+RNO,3,2019,2030,27.5,136,"Scope 3 emissions Global 2030 125,000,000 (-27.5%) 2019 172,432,633"
+RNO,1+2,2019,2035,72,136,"Scopes 1 & 2 market-based emissions World - combined scopes 2035 -72% 2019 1,428,867"
+RNO,3,2019,2035,40,136,"Scope 3 emissions Global 2035 -40% 2019 172,432,633"
+RNO,1+2+3,2019,2050,90,136,"Contribute to neutrality by reducing emissions World - scopes 1, 2 and 3 2050 -90% 2019 173,861,504"

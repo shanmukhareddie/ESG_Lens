@@ -1,0 +1,34 @@
+name: Publish site
+
+# Serves site/index.html on GitHub Pages. Rebuild the page locally first with
+# `python -m src.report.build_site`: the data it embeds is not in this workflow.
+on:
+  push:
+    branches: [main]
+    paths: ["site/index.html"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir _site && cp site/index.html _site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

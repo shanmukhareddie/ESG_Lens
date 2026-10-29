@@ -1,7 +1,9 @@
 .env
 .venv/
 .git/
-data/
+data/raw/
+data/llm_cache/
+*.pdf
 __pycache__/
 .pytest_cache/
 .ruff_cache/

@@ -1,0 +1,463 @@
+<title>ESG Lens</title>
+<meta name="description" content="FY2025 greenhouse gas emissions of the CAC 40, each figure linked to the page of the report it was read from.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@80,600;80,700;100,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: masthead with the key figures, a tab bar, then a two-pane explorer
+   (company index | report sheet) that stacks into one column on phones. */
+:root {
+  --paper: #f2f4f7;
+  --sheet: #ffffff;
+  --ink: #161f2b;
+  --muted: #5b6575;
+  --rule: #dbe0e7;
+  --accent: #1f4f8b;
+  --accent-soft: #e2ebf6;
+  --s1: #bf5530;
+  --s2: #c9921f;
+  --s3: #6a57a5;
+  --ok: #2d7a4d;
+  --ok-soft: #e1f1e7;
+  --plain: #657083;
+  --plain-soft: #eaedf2;
+  --warn: #9a6512;
+  --warn-soft: #fbf0dc;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e131a; --sheet: #151c26; --ink: #e5e9ef; --muted: #98a2b1; --rule: #283240;
+    --accent: #82b2ea; --accent-soft: #1c2b3f; --s1: #e27c55; --s2: #e5b552; --s3: #a896e2;
+    --ok: #63c08e; --ok-soft: #173326; --plain: #a3acba; --plain-soft: #222b37; --warn: #e6b45c; --warn-soft: #34291a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e131a; --sheet: #151c26; --ink: #e5e9ef; --muted: #98a2b1; --rule: #283240;
+  --accent: #82b2ea; --accent-soft: #1c2b3f; --s1: #e27c55; --s2: #e5b552; --s3: #a896e2;
+  --ok: #63c08e; --ok-soft: #173326; --plain: #a3acba; --plain-soft: #222b37; --warn: #e6b45c; --warn-soft: #34291a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 15px/1.5 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-block: 28px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: 22px;
+}
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font: 600 11px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* masthead */
+.mast { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: end; }
+.mast h1 { font-size: 44px; font-weight: 700; font-stretch: 80%; letter-spacing: -.01em; line-height: 1; }
+.mast h1 span { color: var(--accent); }
+.mast p { margin: 10px 0 0; color: var(--muted); max-width: 58ch; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; margin: 0; }
+.stats div { background: var(--sheet); padding: 12px 14px; display: grid; gap: 4px; }
+.stats dt { font-size: 12px; color: var(--muted); }
+.stats dd { margin: 0; font: 600 22px/1.1 var(--display); font-stretch: 80%; }
+.stats dd small { font: 400 12px/1 var(--body); color: var(--muted); margin-left: 4px; }
+
+/* tabs */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); overflow-x: auto; }
+.tabs button {
+  appearance: none; border: 0; background: none; color: var(--muted); cursor: pointer;
+  font: 600 14px/1 var(--body); padding: 10px 14px 12px; border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tabs button:hover { color: var(--ink); }
+
+/* explorer */
+.explorer { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 20px; align-items: start; }
+.index { position: sticky; top: calc(12px + env(safe-area-inset-top, 0px)); display: grid; gap: 8px; }
+.index label { font-size: 13px; color: var(--muted); }
+.index input {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--rule); border-radius: 6px;
+  background: var(--sheet); color: var(--ink); font: inherit;
+}
+.index ul { list-style: none; margin: 0; padding: 0; max-height: 68vh; overflow-y: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--sheet); }
+.index li + li { border-top: 1px solid var(--rule); }
+.index li button {
+  appearance: none; border: 0; background: none; color: var(--ink); width: 100%; text-align: left; cursor: pointer;
+  padding: 9px 12px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; font: inherit;
+}
+.index li button:hover { background: var(--plain-soft); }
+.index li button[aria-current="true"] { background: var(--accent-soft); }
+.index .name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.index .tick { font: 500 12px/1.6 var(--mono); color: var(--muted); }
+.index .mini { grid-column: 1 / -1; height: 4px; display: flex; border-radius: 2px; overflow: hidden; background: var(--plain-soft); }
+.index .flag { font-size: 11px; color: var(--warn); grid-column: 1 / -1; }
+
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 22px; display: grid; gap: 22px; min-width: 0; }
+.sheet h2 { font-size: 28px; font-weight: 700; font-stretch: 80%; }
+.sheet h3 { font-size: 16px; font-weight: 600; }
+.meta { color: var(--muted); margin-top: 4px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 12px 0 0; }
+.facts div { display: grid; gap: 2px; }
+.facts dt { font-size: 12px; color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; }
+
+.mix { display: grid; gap: 10px; }
+.mixbar { display: flex; height: 26px; border-radius: 4px; overflow: hidden; background: var(--plain-soft); }
+.mixbar span { min-width: 3px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 13px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex: none; }
+.c-s1 { background: var(--s1); } .c-s2 { background: var(--s2); } .c-s3 { background: var(--s3); }
+
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th { text-align: left; font: 600 12px/1.2 var(--body); color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td.r, th.r { text-align: right; }
+tr.quote td { background: var(--paper); font: 13px/1.5 var(--mono); color: var(--muted); padding-top: 8px; padding-bottom: 10px; }
+.rowbtn { appearance: none; border: 0; background: none; padding: 0; color: var(--ink); font: inherit; cursor: pointer; text-align: left; display: inline-flex; gap: 6px; align-items: baseline; }
+.rowbtn::after { content: "row as printed"; font-size: 11px; color: var(--accent); }
+.rowbtn[aria-expanded="true"]::after { content: "hide"; }
+.val { display: inline-flex; align-items: center; gap: 7px; justify-content: flex-end; }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.d-verified, .d-reviewed { background: var(--ok); }
+.d-agreed { background: var(--accent); }
+.d-rules_only, .d-llm_only { background: transparent; box-shadow: inset 0 0 0 1.5px var(--plain); }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); }
+.keys span { display: inline-flex; gap: 6px; align-items: center; }
+.note { font-size: 13px; padding: 10px 12px; border-radius: 6px; background: var(--warn-soft); color: var(--ink); }
+.note b { color: var(--warn); }
+
+.targets { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.targets li { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 4px 14px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.targets .cut { font: 700 24px/1 var(--display); font-stretch: 80%; color: var(--accent); grid-row: span 2; }
+.targets .what { font-weight: 500; }
+.targets .src { font-size: 12px; color: var(--muted); }
+.chip { display: inline-block; font: 500 11px/1 var(--body); padding: 4px 7px; border-radius: 99px; background: var(--plain-soft); color: var(--plain); margin-left: 6px; vertical-align: 1px; }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+
+/* portfolio and accuracy */
+.panel { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 22px; display: grid; gap: 18px; min-width: 0; }
+.lede { margin: 0; color: var(--muted); max-width: 72ch; }
+.cov { display: grid; grid-template-columns: 120px auto; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+.covbar { height: 8px; border-radius: 4px; background: var(--plain-soft); overflow: hidden; display: flex; }
+.covbar i { background: var(--ok); }
+.covbar b { background: repeating-linear-gradient(45deg, var(--s2) 0 3px, transparent 3px 6px); }
+.charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.chart h3 { font-size: 16px; font-weight: 600; }
+.chart p { margin: 4px 0 10px; font-size: 13px; color: var(--muted); }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart svg text { fill: var(--ink); font: 12px var(--body); }
+.chart svg text.dim { fill: var(--muted); font: 11px var(--mono); }
+.insight { margin: 0; padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); max-width: 80ch; }
+.sets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.set h3 { font-size: 16px; }
+.set p { margin: 2px 0 8px; font-size: 13px; color: var(--muted); }
+.best { font-weight: 600; }
+
+footer { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+@media (max-width: 900px) {
+  .mast { grid-template-columns: minmax(0, 1fr); }
+  .explorer { grid-template-columns: minmax(0, 1fr); }
+  .index { position: static; }
+  .index ul { max-height: 40vh; }
+  .charts, .sets { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .mast h1 { font-size: 36px; }
+  .sheet, .panel { padding: 16px; }
+  .targets li { grid-template-columns: 70px minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mixbar span, .covbar i { transition: flex-basis .3s ease, width .3s ease; }
+}
+</style>
+<!-- body -->
+<div class="page">
+  <header class="mast">
+    <div>
+      <div class="eyebrow">CAC 40 · fiscal year 2025 · ESRS E1</div>
+      <h1>ESG <span>Lens</span></h1>
+      <p>Greenhouse gas emissions of France's 40 largest listed companies, read from their own
+        annual reports. Every figure links to the page it was read from.</p>
+    </div>
+    <dl class="stats" id="stats"></dl>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="t-companies" aria-controls="companies" aria-selected="true">Companies</button>
+    <button role="tab" id="t-portfolio" aria-controls="portfolio" aria-selected="false">Portfolio</button>
+    <button role="tab" id="t-accuracy" aria-controls="accuracy" aria-selected="false">Accuracy</button>
+  </nav>
+
+  <section id="companies" role="tabpanel" aria-labelledby="t-companies">
+    <div class="explorer">
+      <aside class="index">
+        <label for="q">Find a company</label>
+        <input id="q" type="search" placeholder="Name or ticker" autocomplete="off">
+        <ul id="list"></ul>
+      </aside>
+      <article class="sheet" id="sheet" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section id="portfolio" role="tabpanel" aria-labelledby="t-portfolio" hidden>
+    <div class="panel" id="portfolio-panel"></div>
+  </section>
+
+  <section id="accuracy" role="tabpanel" aria-labelledby="t-accuracy" hidden>
+    <div class="panel" id="accuracy-panel"></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const DATA = __DATA__;
+
+const METRICS = [
+  ["ghg_scope1", "Scope 1", "direct"],
+  ["ghg_scope2_location", "Scope 2, location-based", ""],
+  ["ghg_scope2_market", "Scope 2, market-based", ""],
+  ["ghg_scope3", "Scope 3", "value chain"],
+  ["ghg_total_location", "Total, location-based", ""],
+  ["ghg_total_market", "Total, market-based", ""],
+];
+const STATUS = {
+  verified: "checked by hand", reviewed: "reviewed by hand", agreed: "both extractors agree",
+  rules_only: "rules extractor only", llm_only: "LLM extractor only",
+};
+const byTicker = Object.fromEntries(DATA.companies.map(c => [c.ticker, c]));
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+const fmt = n => n == null ? "–" : Math.round(n).toLocaleString("en-US");
+const pct = (n, d = 0) => n == null ? "–" : n > 0 && n * 100 < 10 ** -d ? "<" + 10 ** -d + "%" : (n * 100).toFixed(d) + "%";
+function tonnes(n) {
+  if (n == null) return "–";
+  if (n >= 1e6) return (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + " Mt";
+  if (n >= 1e3) return (n / 1e3).toFixed(n >= 1e5 ? 0 : 1) + " kt";
+  return Math.round(n) + " t";
+}
+const eur = m => m == null ? "–" : m >= 1000 ? "€" + (m / 1000).toFixed(1) + "bn" : "€" + Math.round(m) + "m";
+
+function value(c, metric, year) { return c.values.find(v => v.metric === metric && v.year === year); }
+function mix(c) {
+  const s1 = value(c, "ghg_scope1", 2025), s3 = value(c, "ghg_scope3", 2025);
+  const s2 = value(c, "ghg_scope2_market", 2025) || value(c, "ghg_scope2_location", 2025);
+  return { s1: s1?.value, s2: s2?.value, s3: s3?.value, s2kind: s2?.metric === "ghg_scope2_location" ? "location" : "market" };
+}
+
+/* masthead */
+function renderStats() {
+  const values = DATA.companies.reduce((n, c) => n + c.values.length, 0);
+  const waiting = DATA.companies.reduce((n, c) => n + c.waiting, 0);
+  const waci = DATA.portfolio.metrics.find(m => m.metric.startsWith("WACI"));
+  const t2 = DATA.accuracy.sets.test2?.rows.find(r => r.extractor.startsWith("llm"));
+  const cells = [
+    ["Figures with page evidence", fmt(values), `${waiting} more in review`],
+    ["Companies", DATA.companies.length, "CAC 40"],
+    ["LLM on unseen reports", t2 ? `${t2.correct}/${t2.gold}` : "–", "values right"],
+    ["Portfolio WACI", waci ? fmt(waci.value) : "–", "tCO2e per €m revenue"],
+  ];
+  $("stats").innerHTML = cells.map(([k, v, s]) => `<div><dt>${k}</dt><dd>${v}<small>${s}</small></dd></div>`).join("");
+}
+
+/* company index */
+let current = null;
+function renderList() {
+  const q = $("q").value.trim().toLowerCase();
+  const items = DATA.companies.filter(c => !q || c.name.toLowerCase().includes(q) || c.short.toLowerCase().includes(q) || c.ticker.toLowerCase().includes(q));
+  $("list").innerHTML = items.map(c => {
+    const m = mix(c), total = (m.s1 || 0) + (m.s2 || 0) + (m.s3 || 0);
+    const bar = total ? ["s1", "s2", "s3"].map(k => m[k] ? `<span class="c-${k}" style="flex-basis:${(m[k] / total * 100).toFixed(2)}%"></span>` : "").join("") : "";
+    const flag = c.waiting ? `<span class="flag">${c.waiting} values in review</span>` : "";
+    return `<li><button data-t="${c.ticker}" aria-current="${c.ticker === current}">
+      <span class="name">${esc(c.short)}</span><span class="tick">${c.ticker}</span>
+      <span class="mini" aria-hidden="true">${bar}</span>${flag}</button></li>`;
+  }).join("") || `<li style="padding:12px;color:var(--muted)">No company matches “${esc(q)}”.</li>`;
+}
+
+function renderSheet(ticker) {
+  const c = byTicker[ticker];
+  current = ticker;
+  const m = mix(c), total = (m.s1 || 0) + (m.s2 || 0) + (m.s3 || 0);
+  const parts = [["s1", "Scope 1", m.s1], ["s2", `Scope 2 (${m.s2kind})`, m.s2], ["s3", "Scope 3", m.s3]];
+  const mixHtml = total ? `
+    <div class="mix">
+      <div class="eyebrow">Where the 2025 emissions come from</div>
+      <div class="mixbar" role="img" aria-label="${parts.map(([, l, v]) => `${l} ${v ? pct(v / total, 1) : "not available"}`).join(", ")}">
+        ${parts.map(([k, , v]) => v ? `<span class="c-${k}" style="flex-basis:${(v / total * 100).toFixed(2)}%"></span>` : "").join("")}
+      </div>
+      <div class="legend">${parts.map(([k, l, v]) => `<span><i class="sw c-${k}"></i>${l}: <b class="num">${tonnes(v)}</b>${v ? ` (${pct(v / total, 1)})` : ""}</span>`).join("")}</div>
+    </div>` : "";
+
+  const rows = METRICS.map(([metric, label]) => {
+    const v25 = value(c, metric, 2025), v24 = value(c, metric, 2024);
+    if (!v25 && !v24) return "";
+    const cell = v => v ? `<span class="val" title="${STATUS[v.status] || v.status}"><i class="dot d-${v.status}"></i><span class="num">${fmt(v.value)}</span></span>` : `<span class="num" style="color:var(--muted)">–</span>`;
+    const pages = [...new Map([v25, v24].filter(Boolean).map(v => [v.page, v.url])).entries()]
+      .map(([p, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">p. ${p}</a>`).join(", ");
+    const quotes = [...new Set([v25, v24].filter(Boolean).map(v => v.quote))].map(esc).join("<br>");
+    return `<tr><td><button class="rowbtn" aria-expanded="false" data-q="${metric}">${label}</button></td>
+      <td class="r">${cell(v25)}</td><td class="r">${cell(v24)}</td><td>${pages}</td></tr>
+      <tr class="quote" id="q-${metric}" hidden><td colspan="4">${quotes}</td></tr>`;
+  }).join("");
+
+  const targets = c.targets.length ? `<section><h3>Climate targets</h3><ul class="targets">${c.targets.map(t => `
+      <li><span class="cut num">−${t.pct % 1 ? t.pct.toFixed(1) : t.pct}%</span>
+        <span class="what">Scope ${t.scope} by ${t.target_year}${t.base_year ? `, against ${t.base_year}` : ""}
+          <span class="chip ${t.source === "labelled" ? "ok" : ""}">${t.source === "labelled" ? "checked by hand" : "read by the LLM"}</span></span>
+        <span class="src">“${esc(t.quote)}” · <a href="${esc(t.url)}" target="_blank" rel="noopener">p. ${t.page}</a></span></li>`).join("")}</ul></section>`
+    : `<section><h3>Climate targets</h3><p class="lede">No absolute reduction target on the company's own emissions was found in the report.</p></section>`;
+
+  const waiting = c.waiting ? `<p class="note"><b>${c.waiting} values in review.</b> The two extractors disagree on them, or the totals do not add up, so they are not shown until a person checks them.</p>` : "";
+
+  $("sheet").innerHTML = `
+    <header>
+      <h2>${esc(c.name)}</h2>
+      <div class="meta">${esc(c.sector)} · ${esc(c.subsector)} · ${esc(c.country)} · <span class="num">${c.ticker}</span></div>
+      <dl class="facts">
+        <div><dt>Revenue 2025</dt><dd>${eur(c.revenue)}</dd></div>
+        <div><dt>Market cap</dt><dd>${eur(c.market_cap)}</dd></div>
+        <div><dt>Employees</dt><dd>${c.employees ? fmt(c.employees) : "–"}</dd></div>
+        <div><dt>Source</dt><dd><a href="${esc(c.report)}" target="_blank" rel="noopener">Annual report</a>${c.report_status === "partial" ? ` <span class="chip">no ESRS E1-6 table</span>` : ""}</dd></div>
+      </dl>
+    </header>
+    ${mixHtml}
+    ${waiting}
+    ${rows ? `<section>
+      <h3>Emissions, tCO2e</h3>
+      <div class="keys"><span><i class="dot d-verified"></i>checked by hand</span><span><i class="dot d-agreed"></i>both extractors agree</span><span><i class="dot d-llm_only"></i>one extractor only</span></div>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Metric</th><th class="r">2025</th><th class="r">2024</th><th>Report page</th></tr></thead>
+        <tbody>${rows}</tbody></table></div></section>` : ""}
+    ${targets}`;
+  renderList();
+}
+
+/* portfolio */
+function barChart(items, label) {
+  const w = 520, row = 26, left = 150, right = 70, h = items.length * row + 8;
+  const max = Math.max(...items.map(i => Math.max(i.share, i.weight)));
+  const x = v => left + (w - left - right) * v / max;
+  return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">
+    ${items.map((it, i) => {
+      const y = 4 + i * row, name = byTicker[it.ticker]?.short || it.ticker;
+      return `<text x="${left - 8}" y="${y + 15}" text-anchor="end">${esc(name)}</text>
+        <rect x="${left}" y="${y + 4}" width="${Math.max(x(it.share) - left, 1)}" height="14" rx="2" fill="var(--accent)"></rect>
+        <rect x="${x(it.weight) - 1}" y="${y}" width="2" height="22" fill="var(--s1)"></rect>
+        <text class="dim" x="${x(Math.max(it.share, it.weight)) + 6}" y="${y + 15}">${pct(it.share, 1)}</text>`;
+    }).join("")}</svg>`;
+}
+
+function renderPortfolio() {
+  const p = DATA.portfolio;
+  const rows = p.metrics.map(m => {
+    const range = Math.abs(m.high - m.low) > 1e-9 ? ` <span class="num" style="color:var(--muted)">(${fmt(m.low)}–${fmt(m.high)})</span>` : "";
+    const cv = m.coverage;
+    return `<tr><td>${esc(m.metric)}</td><td class="r"><span class="num">${fmt(m.value)}</span>${range}</td><td>${esc(m.unit)}</td>
+      <td><div class="cov"><div class="covbar"><i style="width:${(cv.reported || 0) * 100}%"></i><b style="width:${(cv.estimated || 0) * 100}%"></b></div>
+      <span>${pct(cv.reported)} reported${cv.estimated ? `, ${pct(cv.estimated)} estimated` : ""}</span></div></td></tr>`;
+  }).join("");
+  const f = p.financed[0], w = p.waci[0];
+  const name = t => byTicker[t]?.short || t;
+  $("portfolio-panel").innerHTML = `
+    <div><h2 style="font-size:24px">A €${fmt(p.value)}m CAC 40 portfolio</h2>
+      <p class="lede">Weighted by market cap. The SFDR principal adverse impact indicators 1 to 3 and the TCFD's WACI,
+        computed on the figures above. Scope 2 is market-based; ownership is the holding divided by enterprise value
+        including cash (market cap + debt + minority interest).</p></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Indicator</th><th class="r">Value</th><th>Unit</th><th>Coverage of the portfolio</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>
+    <p class="insight">${esc(name(f.ticker))} is ${pct(f.weight, 1)} of the portfolio but ${pct(f.share)} of its financed emissions.
+      On WACI, which stops at Scope 2, ${esc(name(w.ticker))} leads with ${pct(w.share)}. The indicator you steer on decides which stocks look worst.</p>
+    <div class="charts">
+      <div class="chart"><h3>Financed emissions, Scopes 1–3 (PAI 1)</h3>
+        <p>Bar: share of the indicator. Red tick: share of the portfolio.</p>${barChart(p.financed, "Share of financed emissions by company")}</div>
+      <div class="chart"><h3>Carbon intensity, Scopes 1–2 (WACI)</h3>
+        <p>Bar: share of the indicator. Red tick: share of the portfolio.</p>${barChart(p.waci, "Share of WACI by company")}</div>
+    </div>`;
+}
+
+/* accuracy */
+function renderAccuracy() {
+  const a = DATA.accuracy;
+  const label = e => ({ rules: "Rules", llm_v1: "LLM, first prompt", llm_v2: "LLM" }[e] || e);
+  const sets = Object.values(a.sets).map(s => {
+    const best = Math.max(...s.rows.map(r => r.recall));
+    return `<div class="set"><h3>${esc(s.title)}</h3><p>${esc(s.note)}</p><div class="tablewrap"><table>
+      <thead><tr><th>Extractor</th><th class="r">Right</th><th class="r">Precision</th><th class="r">Recall</th></tr></thead>
+      <tbody>${s.rows.map(r => `<tr class="${r.recall === best ? "best" : ""}"><td>${label(r.extractor)}</td>
+        <td class="r num">${r.correct}/${r.gold}</td><td class="r num">${pct(r.precision, 1)}</td><td class="r num">${pct(r.recall, 1)}</td></tr>`).join("")}</tbody>
+      </table></div></div>`;
+  }).join("");
+  const words = { agreed: "Both extractors agree", rules_only: "Only the rules find it", llm_only: "Only the LLM finds it", conflict: "They disagree" };
+  const merge = a.merge.map(r => `<tr><td>${words[r.status] || r.status}</td><td>${label(r.extractor)}</td>
+      <td class="r num">${r.values}</td><td class="r num">${pct(r.precision)}</td></tr>`).join("");
+  $("accuracy-panel").innerHTML = `
+    <div><h2 style="font-size:24px">How far the figures can be trusted</h2>
+      <p class="lede">Two extractors read every report: rules that rebuild tables from word positions, and an LLM
+        (gpt-oss-120b on Groq) that returns JSON checked against a schema. Each is scored against values labelled by hand.
+        A value counts as right within 0.5% or the rounding of its printed unit.</p></div>
+    <div class="sets">${sets}</div>
+    <div><h3 style="font-size:16px">Combining the two</h3>
+      <p class="lede" style="margin:4px 0 8px">Measured on the development companies. Agreed and single-source values are accepted;
+        disagreements go to a person, because there either side is right less than half the time.</p>
+      <div class="tablewrap"><table><thead><tr><th>When</th><th>Value taken from</th><th class="r">Values</th><th class="r">Right</th></tr></thead>
+      <tbody>${merge}</tbody></table></div></div>`;
+}
+
+/* tabs, with a bare #anchor so a link can open a tab */
+function show(tab) {
+  ["companies", "portfolio", "accuracy"].forEach(t => {
+    $(t).hidden = t !== tab;
+    $("t-" + t).setAttribute("aria-selected", t === tab);
+  });
+}
+document.querySelector(".tabs").addEventListener("click", e => {
+  const b = e.target.closest("button[role=tab]");
+  if (!b) return;
+  const tab = b.getAttribute("aria-controls");
+  show(tab);
+  history.replaceState(null, "", "#" + tab);
+});
+$("list").addEventListener("click", e => {
+  const b = e.target.closest("button[data-t]");
+  if (!b) return;
+  renderSheet(b.dataset.t);
+  if (matchMedia("(max-width: 900px)").matches) $("sheet").scrollIntoView({ block: "start" });   // the sheet sits below the list on phones
+});
+$("q").addEventListener("input", renderList);
+$("sheet").addEventListener("click", e => {
+  const b = e.target.closest(".rowbtn");
+  if (!b) return;
+  const row = $("q-" + b.dataset.q), open = row.hidden;
+  row.hidden = !open;
+  b.setAttribute("aria-expanded", open);
+});
+
+renderStats();
+renderPortfolio();
+renderAccuracy();
+renderSheet(byTicker.AIR ? "AIR" : DATA.companies[0].ticker);
+$("foot").innerHTML = `<span>Built ${DATA.built} from the ESG Lens pipeline.</span>
+  <span>Figures are as published by each company; values in review are not shown.</span>
+  <a href="${esc(DATA.repo)}" target="_blank" rel="noopener">Code and method</a>`;
+const start = location.hash.slice(1);
+if (["portfolio", "accuracy", "companies"].includes(start)) show(start);
+</script>

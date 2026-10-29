@@ -1,0 +1,80 @@
+ticker,scope,base_year,target_year,reduction_pct,page,quote,source
+AC,1+2,2019.0,2030,46.2,170,reduce Scope 1 and 2 emissions by 46.2% between 2019 and 2030,extracted
+AC,3,2019.0,2030,27.5,171,"reduce Scopes 3.1, 3.3, 3.14 emissions by 27.5% between 2019 and 2030",extracted
+AI,1+2,2020.0,2035,33.0,319,a clear milestone in 2035 with a -33% reduction in Scope 1 and 2 emissions compared to the baseline of 2020,labelled
+AIR,1+2,2015.0,2030,63.0,164,"Gross market-based ktCO2eq 1,277 615 622 473 -63%",labelled
+BN,1+2,2020.0,2030,46.3,334,reduce absolute scope 1 and 2 GHG emissions by 46.3% by 2030 from a 2020 base year,labelled
+BN,1+3,2020.0,2030,30.3,334,reduce absolute scope 1 and 3 Forest Land and Agriculture (FLAG) GHG emissions by 30.3% by 2030 from a 2020 base year,labelled
+BN,3,2020.0,2030,42.0,334,reduce absolute scope 3 GHG emissions by 42% by 2030 from a 2020 base year,labelled
+BVI,1+2,2021.0,2030,42.0,152,the Company has outlined the financial investment to achieve a 42% reduction in these emissions by 2030.,extracted
+BVI,3,2021.0,2030,25.0,144,"reducing Scope 1 and 2 emissions by 42%, and Scope 3 emissions by 25% from a 2021 baseline.",extracted
+CA,1+2,2019.0,2030,60.0,84,Reduce GHG emissions (Scopes 1 & 2) by 60% by 2030 (vs. 2019),extracted
+CA,3,2019.0,2030,32.0,84,Reduce GHG emissions related to purchased goods and services (Scope 3) by 32% by 2030 (vs. 2019),extracted
+CA,1+2,2019.0,2035,67.2,84,Reduce GHG emissions (Scopes 1 & 2) by 67.2% by 2035 (vs. 2019),extracted
+CA,3,2019.0,2035,46.0,84,Reduce GHG emissions related to purchased goods and services (Scope 3) by 46% by 2035 (vs. 2019),extracted
+CA,1+2,2019.0,2040,70.0,84,Reduce GHG emissions (Scopes 1 & 2) by 70% by 2040 (vs. 2019),extracted
+CAP,1+2,2019.0,2030,80.0,199,"Absolute Scope 1 and 2 emissions (market based) 154,078 11,159 8,747√ -21.6% -80% absolute",labelled
+CAP,3,2019.0,2030,50.0,186,Scope 3 purchased goods and services -50% absolute (2030) -90% absolute (2040) SBTi Corporate Net-Zero Standard,labelled
+CAP,1+2,2019.0,2040,90.0,186,Absolute Scope 1 and 2 emissions (market based) -80% absolute (2030) -90% absolute (2040) SBTi Corporate Net-Zero Standard,labelled
+CAP,1+2+3,2019.0,2040,90.0,186,"90% absolute reduction across our Scope 1, 2 and 3 emissions by 2040, against a 2019 baseline",labelled
+CS,1+2,2019.0,2030,60.0,176,"By the end of 2030, AXA aims to reduce its Scope 1 and Scope 2 emissions (in tons of CO2 equivalent) by 60% compared to 2019",labelled
+DG,1+2,2018.0,2030,40.0,229,40% from 2018 levels ... Target year 2030,extracted
+DG,3,2019.0,2030,20.0,229,Reducing indirect upstream and downstream emissions (Scope 3) by 20% by 2030 from 2019 levels.,extracted
+DSY,1+2,2019.0,2027,77.6,43,"TARGET 2027 | 2024 | ACHIEVED IN 2025 -77.6% | -78.3% Scopes 1 & 2 emissions - Energy (in tCO2-eq, baseline 2019)",extracted
+DSY,3,2019.0,2027,44.8,43,"TARGET 2027 | 2024 2024 | ACHIEVED IN 2025 Scope 3 emissions - Business Travel and Employees' Commute -44.8% (in tCO2-eq, baseline 2019)",extracted
+EL,1+2,2022.0,2030,42.0,115,"Mitigating, EssilorLuxottica committed to reducing absolute Scopes 1 and 2 GHG emissions by 42% by 2030 (baseline 2022)",extracted
+EL,3,2022.0,2030,25.0,115,and absolute Scope 3 GHG emissions from key categories generated in operations) by 25% within the same timeframe.,extracted
+ENGI,1+2,2017.0,2030,45.0,114,#1 Total GHG emissions ... -45% vs. 2017,extracted
+ENGI,3,2017.0,2030,29.0,114,#4 GHG emissions from commodity sales ... -29% vs. 2017,extracted
+ENGI,1+2+3,2017.0,2045,90.0,114,"Group Net Zero Carbon, 90% reduction in emissions and neutralization Scopes 1, 2 and 3 ... 2045",extracted
+ENX,1+2,2020.0,2030,73.5,138,"■By 2030, Euronext will reduce its absolute Scope 1 and its Scope 2 emissions by 73.5% compared to 2020",extracted
+ENX,3,2019.0,2030,46.2,138,"■By 2030, Euronext will reduce its scope 3 travel emissions by at least 46.2% compared to 2019",extracted
+FGR,1+2,2019.0,2030,46.0,107,Scopes 1 + 2 | - 46 % | - 90 %,extracted
+FGR,3,2019.0,2030,30.0,107,Scope 3 amont et aval hors émissions optionnelles | - 30 % | - 90 %,extracted
+FGR,1+2,2019.0,2050,90.0,107,Scopes 1 + 2 | - 46 % | - 90 %,extracted
+FGR,3,2019.0,2050,90.0,107,Scope 3 amont et aval hors émissions optionnelles | - 30 % | - 90 %,extracted
+HO,1+2,2018.0,2030,50.0,151,reduce by 2030 its market-based scope 1 and 2 emissions by 50% in absolute terms compared with 2018,extracted
+HO,3,2018.0,2030,15.0,151,"reduce its scope 3 emissions (categories 1, 6, 9 and 11) by 15% in absolute terms compared with 2018",extracted
+KER,1+2+3,,2028,12.0,162,"Climat | Réduction, à horizon 2028, de 12 % des émissions de gaz à effet de serre en valeur absolue (scopes 1, 2 et 3 du GHG Protocol)",extracted
+KER,1+2,2022.0,2033,54.6,355,"• Scopes 1 et 2 : réduction de 54,6 % des émissions de gaz à effet de serre (GES) de scope 1 et 2, par rapport à l’année 2022 ;",extracted
+KER,3,2022.0,2033,54.6,355,"• Scope 3 – hors Forest, Land and Agriculture (« FLAG ») : réduction de 54,6 % des émissions de GES de scope 3 Énergie et Industrie, par rapport à l’année 2022 ;",extracted
+LR,1+2,2022.0,2030,42.0,131,◼42% reduction in GHG emissions in 2030 ... for Scope 1 & 2,extracted
+LR,3,2022.0,2030,25.0,131,◼25% reduction in 2030 for Scope 3 categories 1 ...,extracted
+LR,1+2,2022.0,2050,90.0,130,◼90% reduction in Scope 1 & 2 emissions between 2022 and 2050,extracted
+LR,3,2022.0,2050,90.0,130,◼90% reduction in Scope 3 emissions between 2022 and 2050,extracted
+MC,1+2,2023.0,2030,68.0,70,68% reduction in energy‑related GHG emissions (in absolute value) for the Group (Scopes 1 and 2) between 2023 and 2030,labelled
+MC,3,2023.0,2030,23.0,70,"32.5% reduction in absolute Scope 3 energy and industry emissions between 2023 and 2033, equating to a 23% reduction between 2023 and 2030",labelled
+MC,3,2023.0,2033,32.5,70,32.5% reduction in absolute Scope 3 energy and industry emissions between 2023 and 2033,labelled
+ML,1+2,2019.0,2030,47.2,193,Scopes 1 and 2 | -47.2% ... Short term: 2030 (vs. 2019),extracted
+ML,3,2019.0,2030,27.5,193,"Required Scope 3 (excluding use-phase emissions) -27.5% in the purchased raw materials, logistics and upstream purchased energy categories",extracted
+ML,1+2+3,2019.0,2050,90.0,193,Long term: 2050 (vs. 2019) ... -90% across the entire required Scope 3,extracted
+OR,1+2,2019.0,2030,57.0,212,"By 2030, L'Oréal is aiming to reduce its Scopes 1 & 2 carbon emissions by 57%, compared to 2019",labelled
+OR,3,2019.0,2030,28.0,212,"By 2030, L'Oréal is aiming to reduce its Scope 3 carbon emissions (from purchased goods and services, upstream transportation and distribution and business travel) by 28%, compared to 2019",labelled
+OR,1+2+3,2019.0,2050,90.0,212,"By 2050, L'Oréal is aiming to reduce its Scopes 1, 2 & 3 carbon emissions by 90%, compared to 2019",labelled
+ORA,1+2+3,2020.0,2030,45.0,380,reducing GHG emissions in all three scopes by 45% in 2030 compared with the 2020 level,labelled
+RI,1+2,2018.0,2030,54.0,133,Scopes 1 & 2 | % | 54 % | 90 %,extracted
+RI,1+2+3,2022.0,2030,30.3,133,All scopes FLAG | % | 30.3 % | 72 %,extracted
+RI,3,2022.0,2030,25.0,133,Scope 3 non-FLAG | % | 25 % | 90 %,extracted
+RMS,1+2,2018.0,2030,50.4,222,Hermès aims to reduce the absolute value of Hermès’ greenhouse gas emissions (GHG) by 50.4% for scopes 1 and 2 emissions (1) by 2030 compared to the 2018 reference year,extracted
+RNO,1+2,2019.0,2030,67.0,138,"For the Industrial scope (absolute scope 1 and 2), the trajectory improved by 12 percentage points compared with 2024, against a 2030 target of 67%",labelled
+RNO,3,2019.0,2030,27.5,136,"Scope 3 emissions Global 2030 125,000,000 (-27.5%) 2019 172,432,633",labelled
+RNO,1+2,2019.0,2035,72.0,136,"Scopes 1 & 2 market-based emissions World - combined scopes 2035 -72% 2019 1,428,867",labelled
+RNO,3,2019.0,2035,40.0,136,"Scope 3 emissions Global 2035 -40% 2019 172,432,633",labelled
+RNO,1+2+3,2019.0,2050,90.0,136,"Contribute to neutrality by reducing emissions World - scopes 1, 2 and 3 2050 -90% 2019 173,861,504",labelled
+SAF,1+2,2018.0,2030,50.4,371,Short-term | Scopes 1 and 2 | 2018 | Absolute | -50.4% | 2030,extracted
+SAN,1+2,2019.0,2030,55.0,160,Scopes 1 et 2 Absolu -55 % 2030,labelled
+SAN,3,2019.0,2030,30.0,160,Scope 3 Absolu -30 % 2030,labelled
+SAN,1+2+3,2019.0,2045,90.0,160,"Scopes 1, 2 et 3 Absolu -90 % 2045",labelled
+SGO,3,2017.0,2030,16.0,95,-16% in scope 3 GHG emissions between 2017 and 2030 (1),extracted
+STM,1+2,2024.0,2030,90.0,150,ST aims to abate at least 90% of its CAPG GHG emissions by 2030 versus 20...,extracted
+SU,1+2,2021.0,2030,76.0,127,"Reach “Net‑Zero ready” operations, reducing its Scopes 1 and 2 emissions by 76% absolute from a 2021 baseline",extracted
+SU,1+2+3,2017.0,2030,90.0,127,This is equivalent to a -90% reduction vs. 2017 baseline,extracted
+SU,3,2021.0,2030,25.0,127,"Reduce its value chain emissions (Scope 3) by 25% absolute from a 2021 baseline, across both upstream and downstream",extracted
+SU,1+2+3,2021.0,2050,90.0,149,"2050 SBTi Target Net‑Zero value chain, 90% absolute GHG reduction vs. 2021",extracted
+TTE,1+2,2015.0,2030,40.0,347,"By 2030, reduce by 40% net(1) Scope 1+2 GHG emissions relative to 2015 for operated activities",labelled
+URW,1+2,2015.0,2030,90.0,115,emissions by -90% for Scopes 1 and 2 ... by 2030,extracted
+URW,1+2+3,2015.0,2030,50.0,115,"-50% for Scopes 1, 2 and 3 by 2030",extracted
+URW,1+2+3,2015.0,2050,90.0,115,-90% by 2050,extracted
+VIE,1+2,2021.0,2032,50.0,205,-50% for scopes 1 and 2 ... by 2032 compared to 2021,extracted
+VIE,3,2021.0,2032,30.0,205,-30% for at least 67% of scope 3 by 2032 compared to 2021,extracted
+VIE,1+2,2021.0,2050,90.0,208,The Group is committed to achieving Net Zero by 2050 (-90% vs. 2021).,extracted

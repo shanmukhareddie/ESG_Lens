@@ -9,7 +9,11 @@ Usage:
     python -m src.validate.evaluate
     python -m src.validate.evaluate rules=data/processed/rules_extractions.csv llm=...
     python -m src.validate.evaluate --gold data/gold/test_labels.csv --out data/processed/test/evaluation.csv \
-        rules=data/processed/test/rules_extractions.csv llm_v2=data/processed/test/llm_extractions.csv
+        rules=data/processed/rules_extractions.csv+data/processed/test/rules_extractions.csv \
+        llm_v2=data/processed/llm_extractions.csv+data/processed/test/llm_extractions.csv
+
+A path can join several files with "+": the test companies outside the CAC 40 (SNCF) are
+extracted to their own files, the others are already in the main ones.
 """
 
 import argparse
@@ -90,10 +94,12 @@ def main() -> None:
     gold = pd.read_csv(args.gold)
     results = []
     for name, path in runs.items():
-        if Path(path).exists():
-            results.append(evaluate(gold, pd.read_csv(path)).assign(extractor=name))
-        else:
+        paths = [Path(p) for p in str(path).split("+")]
+        if not all(p.exists() for p in paths):
             print(f"skipping {name}: {path} not found")
+            continue
+        predictions = pd.concat([pd.read_csv(p) for p in paths], ignore_index=True)
+        results.append(evaluate(gold, predictions).assign(extractor=name))
     results = pd.concat(results, ignore_index=True)
     results.to_csv(args.out, index=False)
 

@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ src/
 COPY tests/ tests/
-COPY pytest.ini .
+COPY pytest.ini app.py ./
+# the small CSVs the tests and dashboard read; the PDFs and LLM cache stay out (.dockerignore)
+COPY data/ data/
 
 CMD ["python", "-m", "pytest", "-q"]

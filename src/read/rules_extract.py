@@ -7,7 +7,7 @@ figure gets the year of the header column above it.
 Usage:
     python -m src.read.rules_extract       # writes data/processed/rules_extractions.csv
     python -m src.read.rules_extract --sources data/cac40_fy2025_sources.csv data/test_sources.csv \
-        --tickers SU SGO KER SNCF --out data/processed/test/rules_extractions.csv
+        --tickers SNCF --out data/processed/test/rules_extractions.csv
 """
 
 import argparse

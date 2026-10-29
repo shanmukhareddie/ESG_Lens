@@ -7,7 +7,7 @@ Usage:
     python -m src.read.llm_extract --tickers BN    # one company
     python -m src.read.llm_extract --all           # every report
     python -m src.read.llm_extract --sources data/cac40_fy2025_sources.csv data/test_sources.csv \
-        --tickers SU SGO KER SNCF --out data/processed/test/llm_extractions.csv
+        --tickers SNCF --out data/processed/test/llm_extractions.csv
 """
 
 import argparse
