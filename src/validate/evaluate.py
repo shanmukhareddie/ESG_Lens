@@ -7,7 +7,9 @@ year), wrong_unit (off by a factor of 1,000) or wrong_value.
 
 Usage:
     python -m src.validate.evaluate
-    python -m src.validate.evaluate rules=data/processed/rules_extractions_checked.csv llm=...
+    python -m src.validate.evaluate rules=data/processed/rules_extractions.csv llm=...
+    python -m src.validate.evaluate --gold data/gold/test_labels.csv --out data/processed/test/evaluation.csv \
+        rules=data/processed/test/rules_extractions.csv llm_v2=data/processed/test/llm_extractions.csv
 """
 
 import argparse
@@ -19,8 +21,9 @@ import pandas as pd
 GOLD = Path("data/gold/gold_labels.csv")
 OUT = Path("data/processed/evaluation.csv")
 DEFAULT_RUNS = {
-    "rules": Path("data/processed/rules_extractions_checked.csv"),
-    "llm": Path("data/processed/llm_extractions_checked.csv"),
+    "rules": Path("data/processed/rules_extractions.csv"),
+    "llm_v1": Path("data/processed/llm_v1_extractions.csv"),     # first prompt, kept for the comparison
+    "llm_v2": Path("data/processed/llm_extractions.csv"),
 }
 KEY = ["ticker", "metric", "year"]
 
@@ -78,11 +81,13 @@ def summarize(results: pd.DataFrame, by: list[str]) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("runs", nargs="*", help="name=path pairs; defaults to the rules and LLM outputs")
+    parser.add_argument("runs", nargs="*", help="name=path pairs; defaults to the rules and both LLM runs")
+    parser.add_argument("--gold", type=Path, default=GOLD)
+    parser.add_argument("--out", type=Path, default=OUT)
     args = parser.parse_args()
     runs = dict(r.split("=", 1) for r in args.runs) if args.runs else DEFAULT_RUNS
 
-    gold = pd.read_csv(GOLD)
+    gold = pd.read_csv(args.gold)
     results = []
     for name, path in runs.items():
         if Path(path).exists():
@@ -90,13 +95,13 @@ def main() -> None:
         else:
             print(f"skipping {name}: {path} not found")
     results = pd.concat(results, ignore_index=True)
-    results.to_csv(OUT, index=False)
+    results.to_csv(args.out, index=False)
 
     pd.set_option("display.width", 160)
     print(summarize(results, ["extractor"]).to_string(index=False))
     print()
     print(summarize(results, ["extractor", "metric"]).to_string(index=False))
-    print(f"\nrow-level results saved to {OUT}")
+    print(f"\nrow-level results saved to {args.out}")
 
 
 if __name__ == "__main__":

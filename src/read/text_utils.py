@@ -74,7 +74,8 @@ UNITS = [
            r"millions?\s+de\s+(t\b|tco2|tonnes)"]),
     (1e3, [r"\bkt\s?co2", r"\bktco2", r"\bkt\s?eq", r"\bkt\b", r"thousands?\s+(of\s+)?(metric\s+)?(t\b|tco2|tonnes|tons)",
            r"milliers?\s+de\s+(t\b|tco2|tonnes)", r"1[,. ]?000\s?x\s?(t\b|tons?|tonnes?)"]),
-    (1.0, [r"\bt\s?co2", r"\btco2", r"\bteq\s?co2", r"\bt\s?eq", r"\btonnes?\s+(of\s+)?co2", r"\btons?\s+(of\s+)?co2"]),
+    (1.0, [r"\bt\s?co2", r"\btco2", r"\bteq\s?co2", r"\bt\s?eq", r"\btonnes?\s+(of\s+)?co2", r"\btons?\s+(of\s+)?co2",
+           r"^t$"]),   # a bare "t" after each figure, as in Saint-Gobain's table
 ]
 
 

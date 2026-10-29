@@ -20,7 +20,7 @@ def test_parse_number_rejects(token):
 @pytest.mark.parametrize("text, scale", [
     ("(tCO2eq)", 1), ("ktCO2eq", 1e3), ("in thousands of tonnes of CO2e", 1e3), ("1,000 x tons of CO2e", 1e3),
     ("en milliers de tonnes", 1e3), ("Mt CO2 eq.", 1e6), ("million tons of CO2-eq", 1e6), ("t eqCO2", 1),
-    ("Scope 1 GHG emissions", None),
+    ("t", 1), ("Scope 1 GHG emissions", None), ("total", None),
 ])
 def test_unit_scale(text, scale):
     assert unit_scale(text) == scale

@@ -23,6 +23,10 @@ rule-based parser and an LLM (Groq).
   base year, target year and percentage cut. Only absolute targets on the company's own
   emissions are kept. BNP Paribas has none (its targets cover its lending and investment
   portfolios), so it does not appear.
+- **Test labels.** 46 values for 4 companies that were not looked at while building either
+  extractor (`data/gold/test_labels.csv`): Schneider Electric, Saint-Gobain, Kering (in French)
+  and SNCF, a state-owned group outside the CAC 40 (`data/test_sources.csv`). Saint-Gobain does
+  not print its 2024 totals, so it has 10 values. Every total equals Scope 1 + 2 + 3.
 
 ## Method
 
@@ -55,7 +59,7 @@ within 0.5% of the gold value or within the rounding of the printed unit.
 |---|---|---|---|---|---|---|
 | Rules | 122 | 91.7% | 85.3% | 10 | 0 | 11 |
 | LLM v1, plain page text | 108 | 81.8% | 75.5% | 11 | 5 | 19 |
-| LLM v2, layout-preserving text | 117 | 85.4% | 81.8% | 6 | 0 | 20 |
+| LLM v2, layout-preserving text | 111 | 87.4% | 77.6% | 16 | 0 | 16 |
 
 **v1 to v2.** The first LLM run read the plain PDF text, where every table cell sits on its own
 line. It could not tell which figure belonged to which year and picked AXA's 2019 base-year
@@ -63,8 +67,12 @@ column as 2025. v2 sends each table row on one line with ` | ` between columns, 
 every wrong-year error. A second fix was in my own code, not the model: BNP Paribas prints the
 unit as "tCO2e" with the subscript stored separately, the model copied it as "tCO e" and the unit
 parser rejected all 12 values (v1 scored 96 before that fix). Both changes were made after
-looking at errors on this same gold set, so these are development scores: the next step is to
-label a few new companies and measure on data neither extractor was tuned on.
+looking at errors on this same gold set, so these are development scores (see the test set below).
+
+**The LLM is not fully repeatable.** The first v2 run scored 117. When four gold companies were
+sent again with the identical request, at temperature 0, BNP Paribas came back with 2024 only:
+six values lost, 111 in the table above. Every reply is now cached, so the figures above can be
+reproduced from the cache, but a fresh run can differ by a few values.
 
 **Where both still fail.**
 - *Orange*: one "2025" heading spans eight business-segment columns, and both extractors read a
@@ -73,13 +81,79 @@ label a few new companies and measure on data neither extractor was tuned on.
   transition-plan figure (3,436 kt) instead of the ESRS total (4,112 kt).
 - *L'Oréal* (LLM only): the year headers wrap onto two lines ("2019 comparativ / e figures"),
   and the model reads the 2019 column as 2025.
-- *TotalEnergies* (LLM only): returns 2025 but not 2024 on the densest page of the set.
+- *TotalEnergies* (LLM only): returns Scopes 1 and 2 but no Scope 3 or totals, on the densest page of the set.
 
 The rules parser is more precise because it measures where each figure sits on the page; the LLM
 reads only text. The LLM needed no layout code and generalises to labels the taxonomy has never
 seen, so the two are best used together: accept a value when they agree, and send the
 disagreements to a person.
 
+## Held-out test
+
+Scored on the 46 test values (`python -m src.validate.evaluate --gold data/gold/test_labels.csv ...`).
+Nothing was changed after seeing these results.
+
+| Extractor | Correct | Precision | Recall | Missed | Wrong unit | Wrong value |
+|---|---|---|---|---|---|---|
+| Rules | 28 | 70.0% | 60.9% | 6 | 4 | 8 |
+| LLM v2 | 36 | 100% | 78.3% | 10 | 0 | 0 |
+
+The ranking flips. On the development set the rules were more precise; on new companies they
+drop from 92% to 70% precision, while the LLM makes no wrong value at all. The rules were
+partly fitted to the twelve layouts they were built on, which is exactly what a test set is for.
+
+- *Schneider Electric*: both extractors get all 12 values.
+- *Saint-Gobain*: the rules get all 10, including Scope 3, where the ESRS table labels the SBTi
+  perimeter (23.4 Mt) as "total Scope 3" but the reported totals only add up with the group
+  figure (78.4 Mt). The LLM read Scopes 1 to 3 correctly, but all its values were rejected by the
+  evidence check because the unit is printed as a bare "t", which the unit parser does not accept.
+  It also took the SBTi totals instead of the group totals.
+- *Kering*: French thousands are separated by spaces, and the rules read "1 965 802" as 1,965:
+  a parser bug on figures with three groups. The LLM gets all 12.
+- *SNCF*: the rules take figures from the wrong table and miss the totals. The LLM gets all 12.
+
+**After fixing both bugs.** Both were fixed afterwards, because the same two bugs also caused
+review work in the main table (Eiffage and Unibail print three-group figures). Re-scored on the
+same 46 values, which are no longer held out since the fixes were made after seeing them:
+
+| Extractor | Correct | Precision | Recall |
+|---|---|---|---|
+| Rules | 32 | 80.0% | 69.6% |
+| LLM v2 | 44 | 95.7% | 95.7% |
+
+The LLM's two errors are Saint-Gobain's SBTi totals. The development scores did not change:
+none of the twelve gold companies prints a three-group figure or a bare "t". The table above
+it remains the honest test score; a new held-out set would be needed to measure the fixed
+version.
+
+## Combining the two
+
+`src/validate/reconcile.py` merges both extractors into one table (`data/processed/emissions.csv`).
+Measured on the gold companies:
+
+| When | Values | Right |
+|---|---|---|
+| both extractors agree | 104 | 98.1% |
+| only one finds the value | 18 | 100% |
+| they disagree: the rules value | 17 | 47% |
+| they disagree: the LLM value | 17 | 18% |
+
+So agreed and single-source values are accepted, and a disagreement goes to a person, since
+neither side is reliable there. Values are also held for review when a company's total does not
+equal Scope 1 + 2 + 3 within 5%: Accor's LLM values fail this check (690 + 2,767 + 4,042 kt
+against a total of 6,849 kt), and so do the SBTi-scope totals the LLM reads for Saint-Gobain's
+2024, which do not match the hand-labelled scopes. Hand-labelled values always win.
+
+**Agreement is not proof.** Vinci prints a baseline-year column before 2025
+(`Total Scope 3 | 50,040 | 48,037 | 48,039`, baseline then 2025 then 2024; the text below the
+table confirms 48 Mt for 2025). Both extractors shifted every value by one column, so their
+agreed Scope 1 for 2025 is the baseline (2,561 kt) instead of 1,985 kt, and the accounting check
+cannot see it, because the baseline column adds up too. `--review DG` sends all of Vinci's
+values to a person. On the gold set, the companies with a disagreement were no more likely to
+have a wrong agreed value, so whole-company review is not triggered automatically.
+
+The result is 396 values for 39 companies, with 58 values in 9 companies waiting in
+`data/review/review_queue.csv`.
 
 ## What made it hard
 
@@ -100,6 +174,8 @@ disagreements to a person.
 
 ## Next
 
+- Review the 58 queued values, Vinci's included.
+- Label a new held-out set to measure the extractors after the fixes.
 - Estimate the missing values (Eurofins Scope 3, partial disclosures) with a model that
   returns a range rather than one number.
-- Compute investor metrics on the cleaned data: WACI and PAI 1-3.
+- Investor metrics (PAI 1-3, WACI) on the cleaned data: see `docs/portfolio_metrics.md`.

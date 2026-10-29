@@ -8,3 +8,5 @@ groq
 psycopg[binary]
 yfinance
 pytest
+scikit-learn
+streamlit

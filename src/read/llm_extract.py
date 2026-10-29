@@ -6,6 +6,8 @@ Usage:
     python -m src.read.llm_extract                 # the 12 gold-set companies
     python -m src.read.llm_extract --tickers BN    # one company
     python -m src.read.llm_extract --all           # every report
+    python -m src.read.llm_extract --sources data/cac40_fy2025_sources.csv data/test_sources.csv \
+        --tickers SU SGO KER SNCF --out data/processed/test/llm_extractions.csv
 """
 
 import argparse
@@ -21,9 +23,10 @@ import pymupdf
 from dotenv import load_dotenv
 from pydantic import ValidationError
 
-from src.read.find_pages import RAW, SOURCES, rank_pages
+from src.read.find_pages import RAW, SOURCES, rank_pages, read_sources
 from src.read.schema import EmissionRecord
 from src.read.text_utils import layout_text, load_taxonomy
+from src.validate.evidence import check
 
 MODEL = "openai/gpt-oss-120b"
 PAGES_PER_REPORT = 4
@@ -152,11 +155,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tickers", nargs="+")
     parser.add_argument("--all", action="store_true")
+    parser.add_argument("--sources", nargs="+", default=[SOURCES])
+    parser.add_argument("--out", type=Path, default=OUT)
     args = parser.parse_args()
 
     load_dotenv()
     client = groq.Groq()
-    sources = pd.read_csv(SOURCES)
+    sources = read_sources(args.sources)
     if args.tickers:
         sources = sources[sources["euronext_ticker"].isin(args.tickers)]
     elif not args.all:
@@ -171,10 +176,11 @@ def main() -> None:
         print(f"{r.euronext_ticker:6s} {len(records)} records", flush=True)
         time.sleep(PAUSE)
 
-    df = pd.DataFrame(rows).drop_duplicates(["ticker", "metric", "year"])
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(OUT, index=False)
-    print(f"saved {len(df)} values for {df['ticker'].nunique()} companies to {OUT}")
+    df = check(pd.DataFrame(rows).drop_duplicates(["ticker", "metric", "year"]))
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(args.out, index=False)
+    print(f"saved {len(df)} values for {df['ticker'].nunique()} companies to {args.out}, "
+          f"{df.evidence_ok.sum()} pass the evidence checks")
 
 
 if __name__ == "__main__":

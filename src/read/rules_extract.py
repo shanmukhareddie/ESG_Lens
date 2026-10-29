@@ -6,15 +6,18 @@ figure gets the year of the header column above it.
 
 Usage:
     python -m src.read.rules_extract       # writes data/processed/rules_extractions.csv
+    python -m src.read.rules_extract --sources data/cac40_fy2025_sources.csv data/test_sources.csv \
+        --tickers SU SGO KER SNCF --out data/processed/test/rules_extractions.csv
 """
 
+import argparse
 import re
 from pathlib import Path
 
 import pandas as pd
 import pymupdf
 
-from src.read.find_pages import RAW, SOURCES, rank_pages
+from src.read.find_pages import RAW, SOURCES, rank_pages, read_sources
 from src.read.text_utils import (
     Word,
     dominant_unit_scale,
@@ -24,6 +27,7 @@ from src.read.text_utils import (
     read_lines,
     unit_scale,
 )
+from src.validate.evidence import check
 
 OUT = Path("data/processed/rules_extractions.csv")
 YEARS = (2024, 2025)
@@ -48,7 +52,7 @@ def figures(line: list[Word], decimal: str) -> list[tuple[Word, float]]:
     for w in line:
         # French reports split "1 234 567" into several words
         prev = merged[-1] if merged else None
-        if prev and re.fullmatch(r"\d{1,3}", prev.text) and re.fullmatch(r"\d{3}([.,]\d+)?", w.text) and w.x0 - prev.x1 < 4:
+        if prev and re.fullmatch(r"\d{1,3}( \d{3})*", prev.text) and re.fullmatch(r"\d{3}([.,]\d+)?", w.text) and w.x0 - prev.x1 < 4:
             merged[-1] = Word(prev.x0, prev.y0, w.x1, w.y1, f"{prev.text} {w.text}")
         else:
             merged.append(w)
@@ -152,14 +156,24 @@ def extract_company(ticker: str, file_name: str, language: str) -> list[dict]:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--sources", nargs="+", default=[SOURCES])
+    parser.add_argument("--tickers", nargs="+")
+    parser.add_argument("--out", type=Path, default=OUT)
+    args = parser.parse_args()
+
+    sources = read_sources(args.sources)
+    if args.tickers:
+        sources = sources[sources["euronext_ticker"].isin(args.tickers)]
     rows = []
-    for r in pd.read_csv(SOURCES).itertuples():
+    for r in sources.itertuples():
         if (RAW / r.file_name).exists():
             rows += extract_company(r.euronext_ticker, r.file_name, r.language)
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    df = pd.DataFrame(rows)
-    df.to_csv(OUT, index=False)
-    print(f"saved {len(df)} values for {df.ticker.nunique()} companies to {OUT}")
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    df = check(pd.DataFrame(rows))
+    df.to_csv(args.out, index=False)
+    print(f"saved {len(df)} values for {df.ticker.nunique()} companies to {args.out}, "
+          f"{df.evidence_ok.sum()} pass the evidence checks")
 
 
 if __name__ == "__main__":

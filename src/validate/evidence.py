@@ -2,6 +2,7 @@
 
 Input: a CSV with ticker, metric, year, value (as printed), unit_as_printed, page, quote.
 Adds page_ok, quote_on_page, value_in_quote, unit_ok, value_tco2e and evidence_ok.
+Both extractors run these checks before saving; the command re-checks a file in place.
 
 Usage:
     python -m src.validate.evidence data/processed/rules_extractions.csv
@@ -15,7 +16,7 @@ from pathlib import Path
 import pandas as pd
 import pymupdf
 
-from src.read.find_pages import RAW, SOURCES
+from src.read.find_pages import RAW, SOURCES, TEST_SOURCES, read_sources
 from src.read.text_utils import SPACES, normalize, unit_scale
 
 WORD = re.compile(r"[a-z0-9]+")
@@ -24,7 +25,7 @@ CHECKS = ["page_ok", "quote_on_page", "value_in_quote", "unit_ok"]
 
 @cache
 def pdf_files() -> dict[str, str]:
-    sources = pd.read_csv(SOURCES)
+    sources = read_sources([SOURCES, TEST_SOURCES])
     return dict(zip(sources["euronext_ticker"], sources["file_name"]))
 
 
@@ -87,9 +88,8 @@ def main() -> None:
     args = parser.parse_args()
 
     checked = check(pd.read_csv(args.csv))
-    out = args.csv.with_name(args.csv.stem + "_checked.csv")
-    checked.to_csv(out, index=False)
-    print(f"{checked.evidence_ok.sum()}/{len(checked)} records pass every check, saved to {out}")
+    checked.to_csv(args.csv, index=False)
+    print(f"{checked.evidence_ok.sum()}/{len(checked)} records pass every check, saved to {args.csv}")
     for col in CHECKS:
         print(f"  {col:15s} {checked[col].mean():.0%}")
 

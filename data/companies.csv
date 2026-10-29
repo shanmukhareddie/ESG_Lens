@@ -1,41 +1,41 @@
-ticker,sector,subsector,employees,revenue,revenue_year,market_cap,currency,country
-AC,Consumer Cyclical,Lodging,17337,5639.0,2025,10350.6,EUR,France
-AI,Basic Materials,Specialty Chemicals,65000,26940.2,2025,111908.5,EUR,France
-AIR,Industrials,Aerospace & Defense,168754,73420.0,2025,153072.3,EUR,Netherlands
-MT,Basic Materials,Steel,125554,54286.2,2025,39717.2,USD,Luxembourg
-CS,Financial Services,Insurance - Diversified,107756,105925.0,2025,85644.9,EUR,France
-BNP,Financial Services,Banks - Regional,180000,68804.0,2025,93762.8,EUR,France
-EN,Industrials,Engineering & Construction,196184,56877.0,2025,15761.7,EUR,France
-BVI,Industrials,Consulting Services,78849,6466.4,2025,12876.3,EUR,France
-CAP,Technology,Information Technology Services,417610,22465.0,2025,20609.2,EUR,France
-CA,Consumer Defensive,Grocery Stores,298604,84024.0,2025,9747.4,EUR,France
-ACA,Financial Services,Banks - Regional,79848,26261.0,2025,45657.9,EUR,France
-BN,Consumer Defensive,Packaged Foods,88670,27283.0,2025,39933.9,EUR,France
-DSY,Technology,Software - Application,25000,6235.7,2025,32260.8,EUR,France
-FGR,Industrials,Engineering & Construction,87000,26134.0,2025,9770.6,EUR,France
-ENGI,Utilities,Utilities - Diversified,84786,71944.0,2025,59221.6,EUR,France
-EL,Healthcare,Medical Instruments & Supplies,213909,28491.0,2025,80215.2,EUR,France
-ERF,Healthcare,Diagnostics & Research,65000,7296.1,2025,14712.2,EUR,Luxembourg
-ENX,Financial Services,Financial Data & Stock Exchanges,3056,1818.1,2025,17644.0,EUR,Netherlands
-RMS,Consumer Cyclical,Luxury Goods,27107,16001.0,2025,133904.4,EUR,France
-KER,Consumer Cyclical,Luxury Goods,41147,14675.0,2025,22017.3,EUR,France
-OR,Consumer Defensive,Household & Personal Products,95000,44052.0,2025,232232.5,EUR,France
-LR,Industrials,Electrical Equipment & Parts,40931,9480.6,2025,33013.2,EUR,France
-MC,Consumer Cyclical,Luxury Goods,196647,80807.0,2025,189988.8,EUR,France
-ML,Consumer Cyclical,Auto Parts,,25992.0,2025,21893.1,EUR,France
-ORA,Communication Services,Telecom Services,121242,40397.0,2025,37899.9,EUR,France
-RI,Consumer Defensive,Beverages - Wineries & Distilleries,16006,9403.0,2026,17052.8,EUR,France
-PUB,Communication Services,Advertising Agencies,115782,17399.0,2025,24787.3,EUR,France
-RNO,Consumer Cyclical,Auto Manufacturers,100000,57922.0,2025,7581.6,EUR,France
-SAF,Industrials,Aerospace & Defense,103710,31189.0,2025,113575.0,EUR,France
-SGO,Industrials,Building Products & Equipment,155544,46483.0,2025,33014.5,EUR,France
-SAN,Healthcare,Drug Manufacturers - General,74846,46716.0,2025,89352.0,EUR,France
-SU,Industrials,Specialty Industrial Machinery,156399,40152.0,2025,138662.6,EUR,France
-GLE,Financial Services,Banks - Regional,101763,52597.0,2025,44111.0,EUR,France
-STLAM,Consumer Cyclical,Auto Manufacturers,258668,153508.0,2025,10720.9,EUR,Netherlands
-STM,Technology,Semiconductors,49000,10441.0,2025,36261.7,USD,Switzerland
-HO,Industrials,Aerospace & Defense,79263,22136.4,2025,47878.2,EUR,France
-TTE,Energy,Oil & Gas Integrated,94847,161343.8,2025,184852.9,USD,France
-URW,Real Estate,REIT - Retail,1933,3058.4,2025,13162.3,EUR,France
-VIE,Industrials,Waste Management,203100,44396.0,2025,24072.6,EUR,France
-DG,Industrials,Engineering & Construction,292101,75702.0,2025,59490.6,EUR,France
+ticker,sector,subsector,employees,revenue,revenue_year,market_cap,currency,country,total_debt,minority_interest
+AC,Consumer Cyclical,Lodging,17337,5639.0,2025,10350.6,EUR,France,4296.0,432.0
+AI,Basic Materials,Specialty Chemicals,65000,26940.2,2025,111908.5,EUR,France,13595.9,733.3
+AIR,Industrials,Aerospace & Defense,168754,73420.0,2025,153072.3,EUR,Netherlands,11023.0,80.0
+MT,Basic Materials,Steel,125554,54286.2,2025,39717.2,USD,Luxembourg,11865.6,1831.6
+CS,Financial Services,Insurance - Diversified,107756,105925.0,2025,85644.9,EUR,France,60492.0,2386.0
+BNP,Financial Services,Banks - Regional,180000,68804.0,2025,93762.8,EUR,France,398488.0,6660.0
+EN,Industrials,Engineering & Construction,196184,56877.0,2025,15761.7,EUR,France,15168.0,1815.0
+BVI,Industrials,Consulting Services,78849,6466.4,2025,12876.3,EUR,France,3085.4,42.2
+CAP,Technology,Information Technology Services,417610,22465.0,2025,20609.2,EUR,France,9458.0,24.0
+CA,Consumer Defensive,Grocery Stores,298604,84024.0,2025,9747.4,EUR,France,5259.0,693.0
+ACA,Financial Services,Banks - Regional,79848,26261.0,2025,45657.9,EUR,France,312979.0,8202.0
+BN,Consumer Defensive,Packaged Foods,88670,27283.0,2025,39933.9,EUR,France,14418.0,52.0
+DSY,Technology,Software - Application,25000,6235.7,2025,32260.8,EUR,France,3169.2,5.4
+FGR,Industrials,Engineering & Construction,87000,26134.0,2025,9770.6,EUR,France,15775.0,1389.0
+ENGI,Utilities,Utilities - Diversified,84786,71944.0,2025,59221.6,EUR,France,54568.0,7879.0
+EL,Healthcare,Medical Instruments & Supplies,213909,28491.0,2025,80215.2,EUR,France,14398.0,604.0
+ERF,Healthcare,Diagnostics & Research,65000,7296.1,2025,14712.2,EUR,Luxembourg,4432.0,33.4
+ENX,Financial Services,Financial Data & Stock Exchanges,3056,1818.1,2025,17644.0,EUR,Netherlands,3401.2,197.2
+RMS,Consumer Cyclical,Luxury Goods,27107,16001.0,2025,133904.4,EUR,France,2346.0,6.0
+KER,Consumer Cyclical,Luxury Goods,41147,14675.0,2025,22017.3,EUR,France,18149.0,809.0
+OR,Consumer Defensive,Household & Personal Products,95000,44052.0,2025,232232.5,EUR,France,11916.1,50.6
+LR,Industrials,Electrical Equipment & Parts,40931,9480.6,2025,33013.2,EUR,France,6603.8,39.8
+MC,Consumer Cyclical,Luxury Goods,196647,80807.0,2025,189988.8,EUR,France,36731.0,1477.0
+ML,Consumer Cyclical,Auto Parts,,25992.0,2025,21893.1,EUR,France,6608.0,4.0
+ORA,Communication Services,Telecom Services,121242,40397.0,2025,37899.9,EUR,France,7522.0,3416.0
+RI,Consumer Defensive,Beverages - Wineries & Distilleries,16006,9403.0,2026,17052.8,EUR,France,12668.0,1040.0
+PUB,Communication Services,Advertising Agencies,115782,17399.0,2025,24787.3,EUR,France,5661.0,-23.0
+RNO,Consumer Cyclical,Auto Manufacturers,100000,57922.0,2025,7581.6,EUR,France,68939.0,1505.0
+SAF,Industrials,Aerospace & Defense,103710,31189.0,2025,113575.0,EUR,France,5325.0,622.0
+SGO,Industrials,Building Products & Equipment,155544,46483.0,2025,33014.5,EUR,France,17729.0,568.0
+SAN,Healthcare,Drug Manufacturers - General,74846,46716.0,2025,89352.0,EUR,France,20329.0,334.0
+SU,Industrials,Specialty Industrial Machinery,156399,40152.0,2025,138662.6,EUR,France,17880.0,256.0
+GLE,Financial Services,Banks - Regional,101763,52597.0,2025,44111.0,EUR,France,167072.0,9383.0
+STLAM,Consumer Cyclical,Auto Manufacturers,258668,153508.0,2025,10720.9,EUR,Netherlands,45947.0,450.0
+STM,Technology,Semiconductors,49000,10441.0,2025,36261.7,USD,Switzerland,2082.9,351.3
+HO,Industrials,Aerospace & Defense,79263,22136.4,2025,47878.2,EUR,France,6129.5,19.3
+TTE,Energy,Oil & Gas Integrated,94847,161343.8,2025,184852.9,USD,France,53152.7,2336.0
+URW,Real Estate,REIT - Retail,1933,3058.4,2025,13162.3,EUR,France,22688.4,3994.6
+VIE,Industrials,Waste Management,203100,44396.0,2025,24072.6,EUR,France,20190.0,2409.0
+DG,Industrials,Engineering & Construction,292101,75702.0,2025,59490.6,EUR,France,37692.0,3576.0

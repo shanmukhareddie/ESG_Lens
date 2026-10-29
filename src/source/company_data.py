@@ -1,13 +1,16 @@
 """Download sector, size and financials for each company from Yahoo Finance.
 
-Writes data/companies.csv with the columns of the companies table. Revenue and
-market cap are in EUR millions; `currency` is the currency of the company's own
-accounts (revenue in USD is converted at that year's average rate).
+Writes data/companies.csv with the columns of the companies table, plus total debt and
+minority interest from the year-end balance sheet (for EVIC). Money is in EUR millions;
+`currency` is the currency of the company's own accounts (amounts in USD are converted at
+that year's average rate).
 
 Usage:
     python -m src.source.company_data
+    python -m src.source.company_data --update total_debt minority_interest   # keep the other columns
 """
 
+import argparse
 import time
 from pathlib import Path
 
@@ -46,14 +49,14 @@ def eur_rate(currency: str, year: int, cache: dict) -> float:
     return cache[(currency, year)]
 
 
-def annual_revenue(ticker: yf.Ticker, year: int) -> float | None:
-    income = ticker.income_stmt
-    if income is None or "Total Revenue" not in income.index:
+def statement_value(statement: pd.DataFrame | None, item: str, year: int) -> float | None:
+    """One line of an annual statement for the fiscal year ending in `year`."""
+    if statement is None or item not in statement.index:
         return None
-    columns = [c for c in income.columns if c.year == year]
-    if not columns or pd.isna(income.loc["Total Revenue", columns[0]]):
+    columns = [c for c in statement.columns if c.year == year]
+    if not columns or pd.isna(statement.loc[item, columns[0]]):
         return None
-    return float(income.loc["Total Revenue", columns[0]])
+    return float(statement.loc[item, columns[0]])
 
 
 def market_cap(ticker: yf.Ticker, info: dict) -> float | None:
@@ -75,22 +78,31 @@ def fetch(ticker: str, yahoo_ticker: str, fx: dict) -> dict:
 
     currency = info.get("financialCurrency") or "EUR"
     year = FISCAL_YEAR_END.get(ticker, 2025)
-    revenue = annual_revenue(t, year)
+    revenue = statement_value(t.income_stmt, "Total Revenue", year)
+    debt = statement_value(t.balance_sheet, "Total Debt", year)
+    minority = statement_value(t.balance_sheet, "Minority Interest", year)
     mcap = market_cap(t, info)
+    rate = eur_rate(currency, year, fx)
     return {
         "ticker": ticker,
         "sector": sector,
         "subsector": subsector,
         "employees": info.get("fullTimeEmployees"),
-        "revenue": round(revenue * eur_rate(currency, year, fx) / 1e6, 1) if revenue else None,
+        "revenue": round(revenue * rate / 1e6, 1) if revenue else None,
         "revenue_year": year,
         "market_cap": round(mcap * eur_rate(info.get("currency") or "EUR", 2026, fx) / 1e6, 1) if mcap else None,
         "currency": currency,
         "country": country,
+        "total_debt": round(debt * rate / 1e6, 1) if debt is not None else None,
+        "minority_interest": round(minority * rate / 1e6, 1) if minority is not None else None,
     }
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--update", nargs="+", help="refresh only these columns of companies.csv")
+    args = parser.parse_args()
+
     fx: dict = {}
     rows = []
     for r in pd.read_csv(SOURCES).itertuples():
@@ -99,6 +111,9 @@ def main() -> None:
         time.sleep(PAUSE)
 
     df = pd.DataFrame(rows)
+    if args.update:
+        old = pd.read_csv(OUT)
+        df = old.drop(columns=args.update, errors="ignore").merge(df[["ticker", *args.update]], on="ticker", how="left")
     df["employees"] = df["employees"].astype("Int64")
     df.to_csv(OUT, index=False)
     print(f"saved {len(df)} companies to {OUT}")

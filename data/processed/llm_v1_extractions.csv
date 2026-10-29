@@ -1,164 +1,164 @@
-ticker,metric,year,value,unit_as_printed,page,quote
-AI,ghg_scope1,2024,14868470.0,tCO2eq,321,"Gross Scope 1 GHG Emissions (tCO2eq) 14,868,470"
-AI,ghg_scope1,2025,14590300.0,tCO2eq,321,"Gross Scope 1 GHG Emissions (tCO2eq) 14,590,300"
-AI,ghg_scope2_location,2024,20682800.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Location-based) (tCO2eq) 20,682,800"
-AI,ghg_scope2_location,2025,19204300.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Location-based) (tCO2eq) 19,204,300"
-AI,ghg_scope2_market,2024,20064140.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Market-based) (tCO2eq) 20,064,140"
-AI,ghg_scope2_market,2025,19599000.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Market-based) (tCO2eq) 19,599,000"
-AI,ghg_scope3,2024,23243928.0,tCO2eq,321,"Total Gross Indirect (Scope 3) GHG Emissions (tCO2eq) 23,243,928"
-AI,ghg_scope3,2025,24252478.0,tCO2eq,321,"Total Gross Indirect (Scope 3) GHG Emissions (tCO2eq) 24,252,478"
-AI,ghg_total_location,2024,58795198.0,tCO2eq,321,"Total GHG Emissions (Location-based) (tCO2eq) 58,795,198"
-AI,ghg_total_location,2025,58047078.0,tCO2eq,321,"Total GHG Emissions (Location-based) (tCO2eq) 58,047,078"
-AI,ghg_total_market,2024,58176538.0,tCO2eq,321,"Total GHG Emissions (Market-based) (tCO2eq) 58,176,538"
-AI,ghg_total_market,2025,58441778.0,tCO2eq,321,"Total GHG Emissions (Market-based) (tCO2eq) 58,441,778"
-AIR,ghg_scope1,2025,480.0,ktCO2eq,164,Gross Scope 1 GHG emissions including regulated emission trading schemes ktCO2eq 480 462
-AIR,ghg_scope1,2024,462.0,ktCO2eq,164,Gross Scope 1 GHG emissions including regulated emission trading schemes ktCO2eq 480 462
-AIR,ghg_scope2_location,2025,342.0,ktCO2eq,164,Gross location-based Scope 2 GHG emissions ktCO2eq 342 323
-AIR,ghg_scope2_location,2024,323.0,ktCO2eq,164,Gross location-based Scope 2 GHG emissions ktCO2eq 342 323
-AIR,ghg_scope2_market,2025,135.0,ktCO2eq,164,Gross market-based Scope 2 GHG emissions ktCO2eq 135 160
-AIR,ghg_scope2_market,2024,160.0,ktCO2eq,164,Gross market-based Scope 2 GHG emissions ktCO2eq 135 160
-AIR,ghg_scope3,2025,492687.0,ktCO2eq,164,"Total Gross indirect (Scope 3) GHG emissions ktCO2eq 492,687 474,691"
-AIR,ghg_scope3,2024,474691.0,ktCO2eq,164,"Total Gross indirect (Scope 3) GHG emissions ktCO2eq 492,687 474,691"
-AIR,ghg_total_location,2025,493509.0,ktCO2eq,164,"Total GHG emissions (location-based) ktCO2eq 493,509 475,476"
-AIR,ghg_total_location,2024,475476.0,ktCO2eq,164,"Total GHG emissions (location-based) ktCO2eq 493,509 475,476"
-AIR,ghg_total_market,2025,493302.0,ktCO2eq,164,"Total GHG emissions (market-based) ktCO2eq 493,302 475,313"
-AIR,ghg_total_market,2024,475313.0,ktCO2eq,164,"Total GHG emissions (market-based) ktCO2eq 493,302 475,313"
-CS,ghg_scope1,2025,31150.0,tCO2eq,179,"Gross Scope 1 GHG emissions 31,150"
-CS,ghg_scope1,2024,21054.0,tCO2eq,179,"Gross Scope 1 GHG emissions 21,054"
-CS,ghg_scope2_location,2025,66002.0,tCO2eq,179,"Gross location‑based Scope 2 GHG emissions 66,002"
-CS,ghg_scope2_location,2024,46912.0,tCO2eq,179,"Gross location‑based Scope 2 GHG emissions 46,912"
-CS,ghg_scope2_market,2025,49795.0,tCO2eq,179,"Gross market‑based Scope 2 GHG emissions 49,795"
-CS,ghg_scope2_market,2024,23146.0,tCO2eq,179,"Gross market‑based Scope 2 GHG emissions 23,146"
-CS,ghg_scope3,2025,56850699.0,tCO2eq,179,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS 56,850,699"
-CS,ghg_scope3,2024,27037251.0,tCO2eq,179,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS 27,037,251"
-CS,ghg_total_location,2025,56947852.0,tCO2eq,179,"Total GHG emissions (location‑based) 56,947,852"
-CS,ghg_total_location,2024,27105217.0,tCO2eq,179,"Total GHG emissions (location‑based) 27,105,217"
-CS,ghg_total_market,2025,56931645.0,tCO2eq,179,"Total GHG emissions (market‑based) 56,931,645"
-CS,ghg_total_market,2024,27081451.0,tCO2eq,179,"Total GHG emissions (market‑based) 27,081,451"
-BNP,ghg_scope1,2025,21516.0,tCO e,755,"Scope 1 Gross GHG Emissions (tCO e) 21,516 23,587"
-BNP,ghg_scope1,2024,23587.0,tCO e,755,"Scope 1 Gross GHG Emissions (tCO e) 21,516 23,587"
-BNP,ghg_scope2_location,2025,113081.0,tCO e,755,"Scope 2 location‑based Gross GHG emissions (tCO e) 113,081 129,336"
-BNP,ghg_scope2_location,2024,129336.0,tCO e,755,"Scope 2 location‑based Gross GHG emissions (tCO e) 113,081 129,336"
-BNP,ghg_scope2_market,2025,51814.0,tCO e,755,"Scope 2 market‑based Gross GHG emissions (tCO e) 51,814 58,093"
-BNP,ghg_scope2_market,2024,58093.0,tCO e,755,"Scope 2 market‑based Gross GHG emissions (tCO e) 51,814 58,093"
-BNP,ghg_scope3,2025,94515034.0,tCO e,755,"Total gross indirect GHG emissions (scope 3) (tCO e) 94,515,034 104,265,939"
-BNP,ghg_scope3,2024,104265939.0,tCO e,755,"Total gross indirect GHG emissions (scope 3) (tCO e) 94,515,034 104,265,939"
-BNP,ghg_total_location,2025,94649631.0,tCO e,755,"Total GHG emissions (location‑based) (tCO e) 94,649,631 104,418,862"
-BNP,ghg_total_location,2024,104418862.0,tCO e,755,"Total GHG emissions (location‑based) (tCO e) 94,649,631 104,418,862"
-BNP,ghg_total_market,2025,94588364.0,tCO e,755,"Total GHG emissions (market‑based) (tCO e) 94,588,364 104,347,619"
-BNP,ghg_total_market,2024,104347619.0,tCO e,755,"Total GHG emissions (market‑based) (tCO e) 94,588,364 104,347,619"
-CAP,ghg_scope1,2024,7893.0,tCO₂e,199,"Gross Scope 1 GHG emissions 13,293 7,893 6,661 √"
-CAP,ghg_scope1,2025,6661.0,tCO₂e,199,"Gross Scope 1 GHG emissions 13,293 7,893 6,661 √"
-CAP,ghg_scope2_location,2024,77752.0,tCO₂e,199,"Gross location-based Scope 2 GHG emissions (tCO₂e) 169,430 77,752 75,874 √"
-CAP,ghg_scope2_location,2025,75874.0,tCO₂e,199,"Gross location-based Scope 2 GHG emissions (tCO₂e) 169,430 77,752 75,874 √"
-CAP,ghg_scope2_market,2024,3267.0,tCO₂e,199,"Gross market-based Scope 2 GHG emissions (tCO₂e) 140,785 3,267 2,087√"
-CAP,ghg_scope2_market,2025,2087.0,tCO₂e,199,"Gross market-based Scope 2 GHG emissions (tCO₂e) 140,785 3,267 2,087√"
-CAP,ghg_scope3,2024,727139.0,tCO₂e,199,"Total Gross indirect (Scope 3) GHG emissions (tCO₂e) 977,472 727,139 650,466√"
-CAP,ghg_scope3,2025,650466.0,tCO₂e,199,"Total Gross indirect (Scope 3) GHG emissions (tCO₂e) 977,472 727,139 650,466√"
-CAP,ghg_total_market,2024,738299.0,tCO₂e,199,"Total GHG emissions (market- 1,131,550 738,299 659,214√"
-CAP,ghg_total_market,2025,659214.0,tCO₂e,199,"Total GHG emissions (market- 1,131,550 738,299 659,214√"
-CAP,ghg_total_location,2024,733001.0,tCO₂e,199,"Total GHG emissions (location- 733,001"
-BN,ghg_scope1,2024,684663.0,t CO2e,227,"Gross scope 1 GHG emissions (t CO2e) (a) 769,787 684,663 697,267"
-BN,ghg_scope1,2025,697267.0,t CO2e,227,"Gross scope 1 GHG emissions (t CO2e) (a) 769,787 684,663 697,267"
-BN,ghg_scope2_location,2024,694742.0,t CO2e,227,"Gross location-based scope 2 GHG emissions (t CO2e) N/A 694,742 633,419"
-BN,ghg_scope2_location,2025,633419.0,t CO2e,227,"Gross location-based scope 2 GHG emissions (t CO2e) N/A 694,742 633,419"
-BN,ghg_scope2_market,2024,122408.0,t CO2e,227,"Gross market-based scope 2 GHG emissions (t CO2e) 443,189 122,408 49,227"
-BN,ghg_scope2_market,2025,49227.0,t CO2e,227,"Gross market-based scope 2 GHG emissions (t CO2e) 443,189 122,408 49,227"
-BN,ghg_scope3,2024,18984106.0,t CO2e,227,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS (t CO2e) 22,093,205 18,984,106 17,862,747"
-BN,ghg_scope3,2025,17862747.0,t CO2e,227,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS (t CO2e) 22,093,205 18,984,106 17,862,747"
-BN,ghg_total_location,2024,20363560.0,t CO2e,227,"TOTAL GHG EMISSIONS (LOCATION-BASED) (t CO2e) N/A 20,363,560 19,193,434"
-BN,ghg_total_location,2025,19193434.0,t CO2e,227,"TOTAL GHG EMISSIONS (LOCATION-BASED) (t CO2e) N/A 20,363,560 19,193,434"
-BN,ghg_total_market,2024,19791227.0,t CO2e,227,"TOTAL GHG EMISSIONS (MARKET-BASED) (t CO2e) 23,306,181 19,791,227 18,609,242"
-BN,ghg_total_market,2025,18609242.0,t CO2e,227,"TOTAL GHG EMISSIONS (MARKET-BASED) (t CO2e) 23,306,181 19,791,227 18,609,242"
-OR,ghg_scope1,2024,54329.0,tCO2eq,213,"Gross Scope 1 GHG emissions 98,869 54,329 42,428"
-OR,ghg_scope1,2025,42428.0,tCO2eq,213,"Gross Scope 1 GHG emissions 98,869 54,329 42,428"
-OR,ghg_scope2_location,2024,175667.0,tCO2eq,213,"Gross Scope 2 GHG emissions (location- 191,550 175,667 171,924"
-OR,ghg_scope2_location,2025,171924.0,tCO2eq,213,"Gross Scope 2 GHG emissions (location- 191,550 175,667 171,924"
-OR,ghg_scope2_market,2024,23417.0,tCO2eq,213,"Gross Scope 2 GHG emissions (market- 60,330 23,417 24,206"
-OR,ghg_scope2_market,2025,24206.0,tCO2eq,213,"Gross Scope 2 GHG emissions (market- 60,330 23,417 24,206"
-OR,ghg_scope3,2024,6448409.0,tCO2eq,213,"Total Scope 3 GHG emissions 6,219,823 6,448,409 6,355,052"
-OR,ghg_scope3,2025,6355052.0,tCO2eq,213,"Total Scope 3 GHG emissions 6,219,823 6,448,409 6,355,052"
-OR,ghg_total_location,2024,6678405.0,tCO2eq,213,"Total GHG emissions (location-based) 6,510,241 6,678,405 6,569,404"
-OR,ghg_total_location,2025,6569404.0,tCO2eq,213,"Total GHG emissions (location-based) 6,510,241 6,678,405 6,569,404"
-OR,ghg_total_market,2024,6526156.0,tCO2eq,213,"Total GHG emissions (market-based) 6,379,022 6,526,156 6,421,686"
-OR,ghg_total_market,2025,6421686.0,tCO2eq,213,"Total GHG emissions (market-based) 6,379,022 6,526,156 6,421,686"
-MC,ghg_scope1,2025,163507.0,tCO2e,83,"Scope 1 163,507 164,767 189,419 -14%"
-MC,ghg_scope1,2024,164767.0,tCO2e,83,"Scope 1 163,507 164,767 189,419 -14%"
-MC,ghg_scope2_location,2025,358551.0,tCO2e,83,"Scope 2 (location‑based) 358,551 358,171 378,871 -5%"
-MC,ghg_scope2_location,2024,358171.0,tCO2e,83,"Scope 2 (location‑based) 358,551 358,171 378,871 -5%"
-MC,ghg_scope2_market,2025,50430.0,tCO2e,83,"Scope 2 (market‑based) 50,430 72,390 151,784 -67%"
-MC,ghg_scope2_market,2024,72390.0,tCO2e,83,"Scope 2 (market‑based) 50,430 72,390 151,784 -67%"
-MC,ghg_scope3,2025,5545811.0,tCO2e,83,"Scope 3 5,545,811 5,943,541 6,356,067 -13%"
-MC,ghg_scope3,2024,5943541.0,tCO2e,83,"Scope 3 5,545,811 5,943,541 6,356,067 -13%"
-MC,ghg_total_location,2025,6067869.0,tCO2e,83,"Total (location-based) 6,067,869 6,466,479 6,924,358 -12%"
-MC,ghg_total_location,2024,6466479.0,tCO2e,83,"Total (location-based) 6,067,869 6,466,479 6,924,358 -12%"
-MC,ghg_total_market,2025,5759748.0,tCO2e,83,"Total (market-based) 5,759,748 6,180,698 6,697,271 -14%"
-MC,ghg_total_market,2024,6180698.0,tCO2e,83,"Total (market-based) 5,759,748 6,180,698 6,697,271 -14%"
+ticker,metric,year,value,unit_as_printed,page,quote,evidence_ok,page_ok,quote_on_page,value_in_quote,unit_ok,value_tco2e
+AI,ghg_scope1,2024,14868470.0,tCO2eq,321,"Gross Scope 1 GHG Emissions (tCO2eq) 14,868,470",True,True,True,True,True,14868470
+AI,ghg_scope1,2025,14590300.0,tCO2eq,321,"Gross Scope 1 GHG Emissions (tCO2eq) 14,590,300",True,True,True,True,True,14590300
+AI,ghg_scope2_location,2024,20682800.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Location-based) (tCO2eq) 20,682,800",True,True,True,True,True,20682800
+AI,ghg_scope2_location,2025,19204300.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Location-based) (tCO2eq) 19,204,300",True,True,True,True,True,19204300
+AI,ghg_scope2_market,2024,20064140.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Market-based) (tCO2eq) 20,064,140",True,True,True,True,True,20064140
+AI,ghg_scope2_market,2025,19599000.0,tCO2eq,321,"Gross Scope 2 GHG Emissions (Market-based) (tCO2eq) 19,599,000",True,True,True,True,True,19599000
+AI,ghg_scope3,2024,23243928.0,tCO2eq,321,"Total Gross Indirect (Scope 3) GHG Emissions (tCO2eq) 23,243,928",True,True,True,True,True,23243928
+AI,ghg_scope3,2025,24252478.0,tCO2eq,321,"Total Gross Indirect (Scope 3) GHG Emissions (tCO2eq) 24,252,478",True,True,True,True,True,24252478
+AI,ghg_total_location,2024,58795198.0,tCO2eq,321,"Total GHG Emissions (Location-based) (tCO2eq) 58,795,198",True,True,True,True,True,58795198
+AI,ghg_total_location,2025,58047078.0,tCO2eq,321,"Total GHG Emissions (Location-based) (tCO2eq) 58,047,078",True,True,True,True,True,58047078
+AI,ghg_total_market,2024,58176538.0,tCO2eq,321,"Total GHG Emissions (Market-based) (tCO2eq) 58,176,538",True,True,True,True,True,58176538
+AI,ghg_total_market,2025,58441778.0,tCO2eq,321,"Total GHG Emissions (Market-based) (tCO2eq) 58,441,778",True,True,True,True,True,58441778
+AIR,ghg_scope1,2025,480.0,ktCO2eq,164,Gross Scope 1 GHG emissions including regulated emission trading schemes ktCO2eq 480 462,True,True,True,True,True,480000
+AIR,ghg_scope1,2024,462.0,ktCO2eq,164,Gross Scope 1 GHG emissions including regulated emission trading schemes ktCO2eq 480 462,True,True,True,True,True,462000
+AIR,ghg_scope2_location,2025,342.0,ktCO2eq,164,Gross location-based Scope 2 GHG emissions ktCO2eq 342 323,True,True,True,True,True,342000
+AIR,ghg_scope2_location,2024,323.0,ktCO2eq,164,Gross location-based Scope 2 GHG emissions ktCO2eq 342 323,True,True,True,True,True,323000
+AIR,ghg_scope2_market,2025,135.0,ktCO2eq,164,Gross market-based Scope 2 GHG emissions ktCO2eq 135 160,True,True,True,True,True,135000
+AIR,ghg_scope2_market,2024,160.0,ktCO2eq,164,Gross market-based Scope 2 GHG emissions ktCO2eq 135 160,True,True,True,True,True,160000
+AIR,ghg_scope3,2025,492687.0,ktCO2eq,164,"Total Gross indirect (Scope 3) GHG emissions ktCO2eq 492,687 474,691",True,True,True,True,True,492687000
+AIR,ghg_scope3,2024,474691.0,ktCO2eq,164,"Total Gross indirect (Scope 3) GHG emissions ktCO2eq 492,687 474,691",True,True,True,True,True,474691000
+AIR,ghg_total_location,2025,493509.0,ktCO2eq,164,"Total GHG emissions (location-based) ktCO2eq 493,509 475,476",True,True,True,True,True,493509000
+AIR,ghg_total_location,2024,475476.0,ktCO2eq,164,"Total GHG emissions (location-based) ktCO2eq 493,509 475,476",True,True,True,True,True,475476000
+AIR,ghg_total_market,2025,493302.0,ktCO2eq,164,"Total GHG emissions (market-based) ktCO2eq 493,302 475,313",True,True,True,True,True,493302000
+AIR,ghg_total_market,2024,475313.0,ktCO2eq,164,"Total GHG emissions (market-based) ktCO2eq 493,302 475,313",True,True,True,True,True,475313000
+CS,ghg_scope1,2025,31150.0,tCO2eq,179,"Gross Scope 1 GHG emissions 31,150",True,True,True,True,True,31150
+CS,ghg_scope1,2024,21054.0,tCO2eq,179,"Gross Scope 1 GHG emissions 21,054",True,True,True,True,True,21054
+CS,ghg_scope2_location,2025,66002.0,tCO2eq,179,"Gross location‑based Scope 2 GHG emissions 66,002",True,True,True,True,True,66002
+CS,ghg_scope2_location,2024,46912.0,tCO2eq,179,"Gross location‑based Scope 2 GHG emissions 46,912",True,True,True,True,True,46912
+CS,ghg_scope2_market,2025,49795.0,tCO2eq,179,"Gross market‑based Scope 2 GHG emissions 49,795",True,True,True,True,True,49795
+CS,ghg_scope2_market,2024,23146.0,tCO2eq,179,"Gross market‑based Scope 2 GHG emissions 23,146",True,True,True,True,True,23146
+CS,ghg_scope3,2025,56850699.0,tCO2eq,179,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS 56,850,699",True,True,True,True,True,56850699
+CS,ghg_scope3,2024,27037251.0,tCO2eq,179,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS 27,037,251",True,True,True,True,True,27037251
+CS,ghg_total_location,2025,56947852.0,tCO2eq,179,"Total GHG emissions (location‑based) 56,947,852",True,True,True,True,True,56947852
+CS,ghg_total_location,2024,27105217.0,tCO2eq,179,"Total GHG emissions (location‑based) 27,105,217",True,True,True,True,True,27105217
+CS,ghg_total_market,2025,56931645.0,tCO2eq,179,"Total GHG emissions (market‑based) 56,931,645",True,True,True,True,True,56931645
+CS,ghg_total_market,2024,27081451.0,tCO2eq,179,"Total GHG emissions (market‑based) 27,081,451",True,True,True,True,True,27081451
+BNP,ghg_scope1,2025,21516.0,tCO e,755,"Scope 1 Gross GHG Emissions (tCO e) 21,516 23,587",True,True,True,True,True,21516
+BNP,ghg_scope1,2024,23587.0,tCO e,755,"Scope 1 Gross GHG Emissions (tCO e) 21,516 23,587",True,True,True,True,True,23587
+BNP,ghg_scope2_location,2025,113081.0,tCO e,755,"Scope 2 location‑based Gross GHG emissions (tCO e) 113,081 129,336",True,True,True,True,True,113081
+BNP,ghg_scope2_location,2024,129336.0,tCO e,755,"Scope 2 location‑based Gross GHG emissions (tCO e) 113,081 129,336",True,True,True,True,True,129336
+BNP,ghg_scope2_market,2025,51814.0,tCO e,755,"Scope 2 market‑based Gross GHG emissions (tCO e) 51,814 58,093",True,True,True,True,True,51814
+BNP,ghg_scope2_market,2024,58093.0,tCO e,755,"Scope 2 market‑based Gross GHG emissions (tCO e) 51,814 58,093",True,True,True,True,True,58093
+BNP,ghg_scope3,2025,94515034.0,tCO e,755,"Total gross indirect GHG emissions (scope 3) (tCO e) 94,515,034 104,265,939",True,True,True,True,True,94515034
+BNP,ghg_scope3,2024,104265939.0,tCO e,755,"Total gross indirect GHG emissions (scope 3) (tCO e) 94,515,034 104,265,939",True,True,True,True,True,104265939
+BNP,ghg_total_location,2025,94649631.0,tCO e,755,"Total GHG emissions (location‑based) (tCO e) 94,649,631 104,418,862",True,True,True,True,True,94649631
+BNP,ghg_total_location,2024,104418862.0,tCO e,755,"Total GHG emissions (location‑based) (tCO e) 94,649,631 104,418,862",True,True,True,True,True,104418862
+BNP,ghg_total_market,2025,94588364.0,tCO e,755,"Total GHG emissions (market‑based) (tCO e) 94,588,364 104,347,619",True,True,True,True,True,94588364
+BNP,ghg_total_market,2024,104347619.0,tCO e,755,"Total GHG emissions (market‑based) (tCO e) 94,588,364 104,347,619",True,True,True,True,True,104347619
+CAP,ghg_scope1,2024,7893.0,tCO₂e,199,"Gross Scope 1 GHG emissions 13,293 7,893 6,661 √",True,True,True,True,True,7893
+CAP,ghg_scope1,2025,6661.0,tCO₂e,199,"Gross Scope 1 GHG emissions 13,293 7,893 6,661 √",True,True,True,True,True,6661
+CAP,ghg_scope2_location,2024,77752.0,tCO₂e,199,"Gross location-based Scope 2 GHG emissions (tCO₂e) 169,430 77,752 75,874 √",True,True,True,True,True,77752
+CAP,ghg_scope2_location,2025,75874.0,tCO₂e,199,"Gross location-based Scope 2 GHG emissions (tCO₂e) 169,430 77,752 75,874 √",True,True,True,True,True,75874
+CAP,ghg_scope2_market,2024,3267.0,tCO₂e,199,"Gross market-based Scope 2 GHG emissions (tCO₂e) 140,785 3,267 2,087√",True,True,True,True,True,3267
+CAP,ghg_scope2_market,2025,2087.0,tCO₂e,199,"Gross market-based Scope 2 GHG emissions (tCO₂e) 140,785 3,267 2,087√",True,True,True,True,True,2087
+CAP,ghg_scope3,2024,727139.0,tCO₂e,199,"Total Gross indirect (Scope 3) GHG emissions (tCO₂e) 977,472 727,139 650,466√",True,True,True,True,True,727139
+CAP,ghg_scope3,2025,650466.0,tCO₂e,199,"Total Gross indirect (Scope 3) GHG emissions (tCO₂e) 977,472 727,139 650,466√",True,True,True,True,True,650466
+CAP,ghg_total_market,2024,738299.0,tCO₂e,199,"Total GHG emissions (market- 1,131,550 738,299 659,214√",True,True,True,True,True,738299
+CAP,ghg_total_market,2025,659214.0,tCO₂e,199,"Total GHG emissions (market- 1,131,550 738,299 659,214√",True,True,True,True,True,659214
+CAP,ghg_total_location,2024,733001.0,tCO₂e,199,"Total GHG emissions (location- 733,001",True,True,True,True,True,733001
+BN,ghg_scope1,2024,684663.0,t CO2e,227,"Gross scope 1 GHG emissions (t CO2e) (a) 769,787 684,663 697,267",True,True,True,True,True,684663
+BN,ghg_scope1,2025,697267.0,t CO2e,227,"Gross scope 1 GHG emissions (t CO2e) (a) 769,787 684,663 697,267",True,True,True,True,True,697267
+BN,ghg_scope2_location,2024,694742.0,t CO2e,227,"Gross location-based scope 2 GHG emissions (t CO2e) N/A 694,742 633,419",True,True,True,True,True,694742
+BN,ghg_scope2_location,2025,633419.0,t CO2e,227,"Gross location-based scope 2 GHG emissions (t CO2e) N/A 694,742 633,419",True,True,True,True,True,633419
+BN,ghg_scope2_market,2024,122408.0,t CO2e,227,"Gross market-based scope 2 GHG emissions (t CO2e) 443,189 122,408 49,227",True,True,True,True,True,122408
+BN,ghg_scope2_market,2025,49227.0,t CO2e,227,"Gross market-based scope 2 GHG emissions (t CO2e) 443,189 122,408 49,227",True,True,True,True,True,49227
+BN,ghg_scope3,2024,18984106.0,t CO2e,227,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS (t CO2e) 22,093,205 18,984,106 17,862,747",True,True,True,True,True,18984106
+BN,ghg_scope3,2025,17862747.0,t CO2e,227,"TOTAL GROSS INDIRECT (SCOPE 3) GHG EMISSIONS (t CO2e) 22,093,205 18,984,106 17,862,747",True,True,True,True,True,17862747
+BN,ghg_total_location,2024,20363560.0,t CO2e,227,"TOTAL GHG EMISSIONS (LOCATION-BASED) (t CO2e) N/A 20,363,560 19,193,434",True,True,True,True,True,20363560
+BN,ghg_total_location,2025,19193434.0,t CO2e,227,"TOTAL GHG EMISSIONS (LOCATION-BASED) (t CO2e) N/A 20,363,560 19,193,434",True,True,True,True,True,19193434
+BN,ghg_total_market,2024,19791227.0,t CO2e,227,"TOTAL GHG EMISSIONS (MARKET-BASED) (t CO2e) 23,306,181 19,791,227 18,609,242",True,True,True,True,True,19791227
+BN,ghg_total_market,2025,18609242.0,t CO2e,227,"TOTAL GHG EMISSIONS (MARKET-BASED) (t CO2e) 23,306,181 19,791,227 18,609,242",True,True,True,True,True,18609242
+OR,ghg_scope1,2024,54329.0,tCO2eq,213,"Gross Scope 1 GHG emissions 98,869 54,329 42,428",True,True,True,True,True,54329
+OR,ghg_scope1,2025,42428.0,tCO2eq,213,"Gross Scope 1 GHG emissions 98,869 54,329 42,428",True,True,True,True,True,42428
+OR,ghg_scope2_location,2024,175667.0,tCO2eq,213,"Gross Scope 2 GHG emissions (location- 191,550 175,667 171,924",True,True,True,True,True,175667
+OR,ghg_scope2_location,2025,171924.0,tCO2eq,213,"Gross Scope 2 GHG emissions (location- 191,550 175,667 171,924",True,True,True,True,True,171924
+OR,ghg_scope2_market,2024,23417.0,tCO2eq,213,"Gross Scope 2 GHG emissions (market- 60,330 23,417 24,206",True,True,True,True,True,23417
+OR,ghg_scope2_market,2025,24206.0,tCO2eq,213,"Gross Scope 2 GHG emissions (market- 60,330 23,417 24,206",True,True,True,True,True,24206
+OR,ghg_scope3,2024,6448409.0,tCO2eq,213,"Total Scope 3 GHG emissions 6,219,823 6,448,409 6,355,052",True,True,True,True,True,6448409
+OR,ghg_scope3,2025,6355052.0,tCO2eq,213,"Total Scope 3 GHG emissions 6,219,823 6,448,409 6,355,052",True,True,True,True,True,6355052
+OR,ghg_total_location,2024,6678405.0,tCO2eq,213,"Total GHG emissions (location-based) 6,510,241 6,678,405 6,569,404",True,True,True,True,True,6678405
+OR,ghg_total_location,2025,6569404.0,tCO2eq,213,"Total GHG emissions (location-based) 6,510,241 6,678,405 6,569,404",True,True,True,True,True,6569404
+OR,ghg_total_market,2024,6526156.0,tCO2eq,213,"Total GHG emissions (market-based) 6,379,022 6,526,156 6,421,686",True,True,True,True,True,6526156
+OR,ghg_total_market,2025,6421686.0,tCO2eq,213,"Total GHG emissions (market-based) 6,379,022 6,526,156 6,421,686",True,True,True,True,True,6421686
+MC,ghg_scope1,2025,163507.0,tCO2e,83,"Scope 1 163,507 164,767 189,419 -14%",True,True,True,True,True,163507
+MC,ghg_scope1,2024,164767.0,tCO2e,83,"Scope 1 163,507 164,767 189,419 -14%",True,True,True,True,True,164767
+MC,ghg_scope2_location,2025,358551.0,tCO2e,83,"Scope 2 (location‑based) 358,551 358,171 378,871 -5%",True,True,True,True,True,358551
+MC,ghg_scope2_location,2024,358171.0,tCO2e,83,"Scope 2 (location‑based) 358,551 358,171 378,871 -5%",True,True,True,True,True,358171
+MC,ghg_scope2_market,2025,50430.0,tCO2e,83,"Scope 2 (market‑based) 50,430 72,390 151,784 -67%",True,True,True,True,True,50430
+MC,ghg_scope2_market,2024,72390.0,tCO2e,83,"Scope 2 (market‑based) 50,430 72,390 151,784 -67%",True,True,True,True,True,72390
+MC,ghg_scope3,2025,5545811.0,tCO2e,83,"Scope 3 5,545,811 5,943,541 6,356,067 -13%",True,True,True,True,True,5545811
+MC,ghg_scope3,2024,5943541.0,tCO2e,83,"Scope 3 5,545,811 5,943,541 6,356,067 -13%",True,True,True,True,True,5943541
+MC,ghg_total_location,2025,6067869.0,tCO2e,83,"Total (location-based) 6,067,869 6,466,479 6,924,358 -12%",True,True,True,True,True,6067869
+MC,ghg_total_location,2024,6466479.0,tCO2e,83,"Total (location-based) 6,067,869 6,466,479 6,924,358 -12%",True,True,True,True,True,6466479
+MC,ghg_total_market,2025,5759748.0,tCO2e,83,"Total (market-based) 5,759,748 6,180,698 6,697,271 -14%",True,True,True,True,True,5759748
+MC,ghg_total_market,2024,6180698.0,tCO2e,83,"Total (market-based) 5,759,748 6,180,698 6,697,271 -14%",True,True,True,True,True,6180698
 ORA,ghg_scope1,2025,8702.0,tons CO2eq,383,"Scope 1
 Gross GHG emissions
 from scope 1
 tons CO2eq
-8,702"
+8,702",True,True,True,True,True,8702
 ORA,ghg_scope1,2024,38255.0,tons CO2eq,383,"Scope 1
 Gross GHG emissions
 from scope 1
 tons CO2eq
-38,255"
+38,255",True,True,True,True,True,38255
 ORA,ghg_scope2_location,2025,76778.0,tons CO2eq,383,"Scope 2
 Gross GHG emissions from
 scope 2 (location based)
 tons CO2eq
-76,778"
+76,778",True,True,True,True,True,76778
 ORA,ghg_scope2_location,2024,367704.0,tons CO2eq,383,"Scope 2
 Gross GHG emissions from
 scope 2 (location based)
 tons CO2eq
-367,704"
+367,704",True,True,True,True,True,367704
 ORA,ghg_scope2_market,2025,68443.0,tons CO2eq,383,"Gross GHG emissions from
 scope 2 (market based)
 tons CO2eq
-68,443"
+68,443",True,True,True,True,True,68443
 ORA,ghg_scope2_market,2024,24023.0,tons CO2eq,383,"Gross GHG emissions from
 scope 2 (market based)
 tons CO2eq
-24,023"
+24,023",True,True,True,True,True,24023
 ORA,ghg_scope3,2025,1309727.0,tons CO2eq,383,"Scope 3
 Gross GHG emissions from
 scope 3 (location based)
 tons CO2eq
-1,309,727"
+1,309,727",True,True,True,True,True,1309727
 ORA,ghg_scope3,2024,977625.0,tons CO2eq,383,"Scope 3
 Gross GHG emissions from
 scope 3 (location based)
 tons CO2eq
-977,625"
-RNO,ghg_scope1,2025,379100.0,tCO2e,141,"Gross Scope 1 GHG emissions 379,100"
-RNO,ghg_scope1,2024,406440.0,tCO2e,141,"Gross Scope 1 GHG emissions 406,440"
-RNO,ghg_scope2_location,2025,437894.0,tCO2e,141,"Gross scope 2 GHG emissions (location-based) 437,894"
-RNO,ghg_scope2_location,2024,504850.0,tCO2e,141,"Gross scope 2 GHG emissions (location-based) 504,850"
-RNO,ghg_scope2_market,2025,141702.0,tCO2e,141,"Gross scope 2 GHG emissions (market-based) 141,702"
-RNO,ghg_scope2_market,2024,289750.0,tCO2e,141,"Gross scope 2 GHG emissions (market-based) 289,750"
-RNO,ghg_scope3,2025,172432633.0,tCO2e,142,"Gross scope 3 GHG emissions 172,432,633"
-RNO,ghg_scope3,2024,106834026.0,tCO2e,142,"Gross scope 3 GHG emissions 106,834,026"
-RNO,ghg_total_location,2025,816994.0,tCO2e,142,"TOTAL (location-based) 816,994"
-RNO,ghg_total_location,2024,911290.0,tCO2e,142,"TOTAL (location-based) 911,290"
-RNO,ghg_total_market,2025,520802.0,tCO2e,142,"TOTAL (market-based) 520,802"
-RNO,ghg_total_market,2024,696190.0,tCO2e,142,"TOTAL (market-based) 696,190"
-SAN,ghg_scope1,2025,269.0,ktCO2eq,172,Émissions brutes de scope 1 location-based 269
-SAN,ghg_scope2_location,2025,250.0,ktCO2eq,172,Émissions brutes de GES de scope 2 location-based (ktCO2eq) 250
-SAN,ghg_scope2_market,2025,70.0,ktCO2eq,172,Émissions brutes de GES de scope 2 market-based (ktCO2eq) 70
-SAN,ghg_scope3,2025,4112.0,ktCO2eq,172,Total des émissions indirectes brutes (ESRS Scope 3) (ktCO2eq) 4 112
-SAN,ghg_total_location,2025,4632.0,ktCO2eq,172,Émissions totales de GES (location-based) (ktCO2eq) 4 632
-SAN,ghg_total_market,2025,4451.0,ktCO2eq,172,Émissions totales de GES (market-based) (ktCO2eq) 4 451
-TTE,ghg_scope1,2024,43200000.0,t CO2e,349,"Gross Scope 1 GHG emissions 43,200,000"
-TTE,ghg_scope1,2025,42200000.0,t CO2e,349,"Gross Scope 1 GHG emissions 42,200,000"
-TTE,ghg_scope2_market,2024,1600000.0,t CO2e,349,"Gross market-based Scope 2 GHG emissions 1,600,000"
-TTE,ghg_scope2_market,2025,1700000.0,t CO2e,349,"Gross market-based Scope 2 GHG emissions 1,700,000"
-TTE,ghg_scope2_location,2024,2400000.0,t CO2e,349,"Gross location-based Scope 2 GHG emissions (t CO2e) 2,400,000"
-TTE,ghg_scope2_location,2025,2600000.0,t CO2e,349,"Gross location-based Scope 2 GHG emissions (t CO2e) 2,600,000"
-TTE,ghg_scope3,2024,342000000.0,t CO2e,350,"Total gross indirect GHG (Scope 3) emissions (t CO2e) 342,000,000"
-TTE,ghg_scope3,2025,335000000.0,t CO2e,350,"Total gross indirect GHG (Scope 3) emissions (t CO2e) 335,000,000"
-TTE,ghg_total_market,2024,387000000.0,t CO2e,350,"Total GHG emissions (market-based) 387,000,000"
-TTE,ghg_total_market,2025,379000000.0,t CO2e,350,"Total GHG emissions (market-based) 379,000,000"
-TTE,ghg_total_location,2024,388000000.0,t CO2e,350,"Total GHG emissions (location-based) 388,000,000"
-TTE,ghg_total_location,2025,380000000.0,t CO2e,350,"Total GHG emissions (location-based) 380,000,000"
+977,625",True,True,True,True,True,977625
+RNO,ghg_scope1,2025,379100.0,tCO2e,141,"Gross Scope 1 GHG emissions 379,100",True,True,True,True,True,379100
+RNO,ghg_scope1,2024,406440.0,tCO2e,141,"Gross Scope 1 GHG emissions 406,440",True,True,True,True,True,406440
+RNO,ghg_scope2_location,2025,437894.0,tCO2e,141,"Gross scope 2 GHG emissions (location-based) 437,894",True,True,True,True,True,437894
+RNO,ghg_scope2_location,2024,504850.0,tCO2e,141,"Gross scope 2 GHG emissions (location-based) 504,850",True,True,True,True,True,504850
+RNO,ghg_scope2_market,2025,141702.0,tCO2e,141,"Gross scope 2 GHG emissions (market-based) 141,702",True,True,True,True,True,141702
+RNO,ghg_scope2_market,2024,289750.0,tCO2e,141,"Gross scope 2 GHG emissions (market-based) 289,750",True,True,True,True,True,289750
+RNO,ghg_scope3,2025,172432633.0,tCO2e,142,"Gross scope 3 GHG emissions 172,432,633",True,True,True,True,True,172432633
+RNO,ghg_scope3,2024,106834026.0,tCO2e,142,"Gross scope 3 GHG emissions 106,834,026",True,True,True,True,True,106834026
+RNO,ghg_total_location,2025,816994.0,tCO2e,142,"TOTAL (location-based) 816,994",True,True,True,True,True,816994
+RNO,ghg_total_location,2024,911290.0,tCO2e,142,"TOTAL (location-based) 911,290",True,True,True,True,True,911290
+RNO,ghg_total_market,2025,520802.0,tCO2e,142,"TOTAL (market-based) 520,802",True,True,True,True,True,520802
+RNO,ghg_total_market,2024,696190.0,tCO2e,142,"TOTAL (market-based) 696,190",True,True,True,True,True,696190
+SAN,ghg_scope1,2025,269.0,ktCO2eq,172,Émissions brutes de scope 1 location-based 269,True,True,True,True,True,269000
+SAN,ghg_scope2_location,2025,250.0,ktCO2eq,172,Émissions brutes de GES de scope 2 location-based (ktCO2eq) 250,True,True,True,True,True,250000
+SAN,ghg_scope2_market,2025,70.0,ktCO2eq,172,Émissions brutes de GES de scope 2 market-based (ktCO2eq) 70,True,True,True,True,True,70000
+SAN,ghg_scope3,2025,4112.0,ktCO2eq,172,Total des émissions indirectes brutes (ESRS Scope 3) (ktCO2eq) 4 112,True,True,True,True,True,4112000
+SAN,ghg_total_location,2025,4632.0,ktCO2eq,172,Émissions totales de GES (location-based) (ktCO2eq) 4 632,True,True,True,True,True,4632000
+SAN,ghg_total_market,2025,4451.0,ktCO2eq,172,Émissions totales de GES (market-based) (ktCO2eq) 4 451,True,True,True,True,True,4451000
+TTE,ghg_scope1,2024,43200000.0,t CO2e,349,"Gross Scope 1 GHG emissions 43,200,000",True,True,True,True,True,43200000
+TTE,ghg_scope1,2025,42200000.0,t CO2e,349,"Gross Scope 1 GHG emissions 42,200,000",True,True,True,True,True,42200000
+TTE,ghg_scope2_market,2024,1600000.0,t CO2e,349,"Gross market-based Scope 2 GHG emissions 1,600,000",True,True,True,True,True,1600000
+TTE,ghg_scope2_market,2025,1700000.0,t CO2e,349,"Gross market-based Scope 2 GHG emissions 1,700,000",True,True,True,True,True,1700000
+TTE,ghg_scope2_location,2024,2400000.0,t CO2e,349,"Gross location-based Scope 2 GHG emissions (t CO2e) 2,400,000",True,True,True,True,True,2400000
+TTE,ghg_scope2_location,2025,2600000.0,t CO2e,349,"Gross location-based Scope 2 GHG emissions (t CO2e) 2,600,000",True,True,True,True,True,2600000
+TTE,ghg_scope3,2024,342000000.0,t CO2e,350,"Total gross indirect GHG (Scope 3) emissions (t CO2e) 342,000,000",True,True,True,True,True,342000000
+TTE,ghg_scope3,2025,335000000.0,t CO2e,350,"Total gross indirect GHG (Scope 3) emissions (t CO2e) 335,000,000",True,True,True,True,True,335000000
+TTE,ghg_total_market,2024,387000000.0,t CO2e,350,"Total GHG emissions (market-based) 387,000,000",True,True,True,True,True,387000000
+TTE,ghg_total_market,2025,379000000.0,t CO2e,350,"Total GHG emissions (market-based) 379,000,000",True,True,True,True,True,379000000
+TTE,ghg_total_location,2024,388000000.0,t CO2e,350,"Total GHG emissions (location-based) 388,000,000",True,True,True,True,True,388000000
+TTE,ghg_total_location,2025,380000000.0,t CO2e,350,"Total GHG emissions (location-based) 380,000,000",True,True,True,True,True,380000000

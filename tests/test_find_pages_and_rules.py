@@ -36,3 +36,10 @@ def test_rules_applies_unit_and_french_numbers(tmp_path):
     path = make_pdf(tmp_path / "FR_FY2025.pdf", [(330, "2025"), (400, "2024")], rows,
                     title="Émissions de GES (en milliers de tonnes)")
     assert _extract(path, decimal=",")[("ghg_scope1", 2025)] == 698_274_000
+
+
+def test_rules_reads_french_numbers_with_three_groups(tmp_path):
+    rows = [("Émissions brutes de GES scope 3 (t eqCO2)", [(330, "6 057 576"), (400, "6 911 194")])]
+    path = make_pdf(tmp_path / "FR_FY2025.pdf", [(330, "2025"), (400, "2024")], rows)
+    got = _extract(path, decimal=",")
+    assert got[("ghg_scope3", 2025)] == 6_057_576 and got[("ghg_scope3", 2024)] == 6_911_194

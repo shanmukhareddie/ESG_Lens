@@ -6,10 +6,12 @@ companies are matched on isin, metrics on (company_id, metric_name, year).
 Usage:
     python -m src.load.to_supabase companies
     python -m src.load.to_supabase metrics data/gold/gold_labels.csv
-    python -m src.load.to_supabase metrics data/processed/rules_extractions_checked.csv
+    python -m src.load.to_supabase metrics data/processed/emissions.csv
 
 A metrics file needs ticker, metric, year, value_tco2e, page and quote (pdf_page and
 row_text are accepted too). Rows that failed the evidence checks are not loaded.
+With --replace, rows of the same source that are no longer in the file are deleted, so a
+value sent back to review leaves the database too.
 """
 
 import argparse
@@ -44,6 +46,14 @@ UPSERT_METRIC = """
 """
 
 
+DELETE_STALE = """
+    DELETE FROM metrics m
+    WHERE m.source = %s
+      AND (m.company_id, m.metric_name, m.year) NOT IN (
+          SELECT * FROM unnest(%s::int[], %s::text[], %s::int[]))
+"""
+
+
 def connect() -> psycopg.Connection:
     load_dotenv()
     return psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=20)
@@ -74,7 +84,8 @@ def company_ids(con: psycopg.Connection) -> dict[str, int]:
     return {t: id_by_isin[i] for t, i in zip(sources["euronext_ticker"], sources["isin"]) if i in id_by_isin}
 
 
-def load_metrics(con: psycopg.Connection, csv: Path, source: str = "reported") -> tuple[int, int]:
+def load_metrics(con: psycopg.Connection, csv: Path, source: str = "reported",
+                 replace: bool = False) -> tuple[int, int, int]:
     df = pd.read_csv(csv).rename(columns={"pdf_page": "page", "row_text": "quote"})
     skipped = 0
     if "evidence_ok" in df:
@@ -90,9 +101,14 @@ def load_metrics(con: psycopg.Connection, csv: Path, source: str = "reported") -
         (ids[r.ticker], r.metric, int(r.year), float(r.value_tco2e), source, int(r.page), r.quote, urls[r.ticker], now)
         for r in df.itertuples()
     ]
+    deleted = 0
     with con.cursor() as cur:
         cur.executemany(UPSERT_METRIC, rows)
-    return len(rows), skipped
+        if replace:
+            keys = list(zip(*[(r[0], r[1], r[2]) for r in rows])) or [[], [], []]
+            cur.execute(DELETE_STALE, (source, *map(list, keys)))
+            deleted = cur.rowcount
+    return len(rows), skipped, deleted
 
 
 def main() -> None:
@@ -102,14 +118,16 @@ def main() -> None:
     metrics = sub.add_parser("metrics")
     metrics.add_argument("csv", type=Path)
     metrics.add_argument("--source", default="reported", choices=["reported", "estimated"])
+    metrics.add_argument("--replace", action="store_true", help="delete rows of this source not in the file")
     args = parser.parse_args()
 
     with connect() as con:   # a single transaction: either every row is written or none
         if args.table == "companies":
             print(f"upserted {load_companies(con)} companies")
         else:
-            n, skipped = load_metrics(con, args.csv, args.source)
-            print(f"upserted {n} metrics from {args.csv}" + (f", skipped {skipped} that failed checks" if skipped else ""))
+            n, skipped, deleted = load_metrics(con, args.csv, args.source, args.replace)
+            print(f"upserted {n} metrics from {args.csv}" + (f", skipped {skipped} that failed checks" if skipped else "")
+                  + (f", deleted {deleted} no longer in the file" if args.replace else ""))
         totals = {t: con.execute(f"SELECT count(*) FROM {t}").fetchone()[0] for t in ("companies", "metrics")}
         print(f"rows in database: {totals}")
 
