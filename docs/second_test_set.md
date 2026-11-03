@@ -7,8 +7,8 @@ reports that neither extractor's output had been looked at for.
 
 ## Labels
 
-48 values in `data/gold/test2_labels.csv`, read from the rendered pages, in the same format as
-the gold set. The four companies are chosen for different kinds of report:
+48 values in `data/gold/gold_labels.csv` (split `test2`), read from the rendered pages, in the same
+format as the rest of the gold set. The four companies are chosen for different kinds of report:
 
 | Company | Sector | Page | What makes it a test |
 |---|---|---|---|
@@ -22,7 +22,7 @@ market-based total, which is built from its contractual-instrument figures (note
 
 ## Results
 
-`python -m src.validate.evaluate --gold data/gold/test2_labels.csv --out data/processed/test2/evaluation.csv rules=data/processed/rules_extractions.csv llm_v2=data/processed/llm_extractions.csv`
+`python -m src.validate.evaluate --split test2`
 
 | Extractor | Correct | Precision | Recall | Missed | Wrong |
 |---|---|---|---|---|---|

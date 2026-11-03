@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 import yfinance as yf
 
-SOURCES = Path("data/cac40_fy2025_sources.csv")
+SOURCES = Path("data/sources.csv")
 OUT = Path("data/companies.csv")
 PAUSE = 2.0   # seconds between companies; Yahoo answers 429 to fast loops
 
@@ -25,6 +25,8 @@ PAUSE = 2.0   # seconds between companies; Yahoo answers 429 to fast loops
 FISCAL_YEAR_END = {"RI": 2026}
 # Yahoo has no profile for Michelin (ML.PA); these are the values it shows for the company elsewhere.
 MISSING_PROFILE = {"ML": ("Consumer Cyclical", "Auto Parts", "France")}
+# ...nor its headcount: workforce at 31 December 2025, from its 2025 universal registration document (p. 270).
+EMPLOYEES_FROM_REPORT = {"ML": 122_586}
 
 
 def profile(ticker: yf.Ticker) -> dict:
@@ -87,7 +89,7 @@ def fetch(ticker: str, yahoo_ticker: str, fx: dict) -> dict:
         "ticker": ticker,
         "sector": sector,
         "subsector": subsector,
-        "employees": info.get("fullTimeEmployees"),
+        "employees": info.get("fullTimeEmployees") or EMPLOYEES_FROM_REPORT.get(ticker),
         "revenue": round(revenue * rate / 1e6, 1) if revenue else None,
         "revenue_year": year,
         "market_cap": round(mcap * eur_rate(info.get("currency") or "EUR", 2026, fx) / 1e6, 1) if mcap else None,
@@ -105,7 +107,8 @@ def main() -> None:
 
     fx: dict = {}
     rows = []
-    for r in pd.read_csv(SOURCES).itertuples():
+    sources = pd.read_csv(SOURCES)
+    for r in sources[sources["in_cac40"]].itertuples():
         rows.append(fetch(r.euronext_ticker, r.yahoo_ticker, fx))
         print(r.euronext_ticker, rows[-1]["sector"], flush=True)
         time.sleep(PAUSE)

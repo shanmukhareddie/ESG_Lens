@@ -5,15 +5,15 @@ year), wrong_unit (off by a factor of 1,000) or wrong_value.
     precision = correct / values the extractor returned
     recall    = correct / gold values
 
-Usage:
-    python -m src.validate.evaluate
-    python -m src.validate.evaluate rules=data/processed/rules_extractions.csv llm=...
-    python -m src.validate.evaluate --gold data/gold/test_labels.csv --out data/processed/test/evaluation.csv \
-        rules=data/processed/rules_extractions.csv+data/processed/test/rules_extractions.csv \
-        llm_v2=data/processed/llm_extractions.csv+data/processed/test/llm_extractions.csv
+The labels come in three splits: dev (the 12 companies the extractors were built on),
+test1 and test2 (held-out companies). All scores live in one file, data/processed/evaluation.csv:
+a run replaces the rows of the split and extractors it scores and keeps the others, such as
+llm_v1, the first prompt, whose output is no longer kept.
 
-A path can join several files with "+": the test companies outside the CAC 40 (SNCF) are
-extracted to their own files, the others are already in the main ones.
+Usage:
+    python -m src.validate.evaluate                    # dev split, rules and LLM
+    python -m src.validate.evaluate --split test2
+    python -m src.validate.evaluate --split dev rules=data/processed/rules_extractions.csv
 """
 
 import argparse
@@ -26,9 +26,9 @@ GOLD = Path("data/gold/gold_labels.csv")
 OUT = Path("data/processed/evaluation.csv")
 DEFAULT_RUNS = {
     "rules": Path("data/processed/rules_extractions.csv"),
-    "llm_v1": Path("data/processed/llm_v1_extractions.csv"),     # first prompt, kept for the comparison
     "llm_v2": Path("data/processed/llm_extractions.csv"),
 }
+SPLITS = ["dev", "test1", "test2"]
 KEY = ["ticker", "metric", "year"]
 
 
@@ -85,29 +85,37 @@ def summarize(results: pd.DataFrame, by: list[str]) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("runs", nargs="*", help="name=path pairs; defaults to the rules and both LLM runs")
-    parser.add_argument("--gold", type=Path, default=GOLD)
-    parser.add_argument("--out", type=Path, default=OUT)
+    parser.add_argument("runs", nargs="*", help="name=path pairs; defaults to the rules and the LLM")
+    parser.add_argument("--split", default="dev", choices=SPLITS)
     args = parser.parse_args()
     runs = dict(r.split("=", 1) for r in args.runs) if args.runs else DEFAULT_RUNS
 
-    gold = pd.read_csv(args.gold)
+    gold = pd.read_csv(GOLD)
+    gold = gold[gold["split"] == args.split]
     results = []
     for name, path in runs.items():
-        paths = [Path(p) for p in str(path).split("+")]
-        if not all(p.exists() for p in paths):
+        if not Path(path).exists():
             print(f"skipping {name}: {path} not found")
             continue
-        predictions = pd.concat([pd.read_csv(p) for p in paths], ignore_index=True)
-        results.append(evaluate(gold, predictions).assign(extractor=name))
+        results.append(evaluate(gold, pd.read_csv(path)).assign(extractor=name, split=args.split))
     results = pd.concat(results, ignore_index=True)
-    results.to_csv(args.out, index=False)
+
+    if OUT.exists():   # keep the scores of other splits and extractors
+        kept = pd.read_csv(OUT)
+        kept = kept[~((kept["split"] == args.split) & kept["extractor"].isin(results["extractor"]))]
+        results_all = pd.concat([kept, results], ignore_index=True)
+    else:
+        results_all = results
+    order = {s: i for i, s in enumerate(SPLITS)}
+    results_all = results_all.sort_values(["split", "extractor"] + KEY, key=lambda c: c.map(order) if c.name == "split" else c)
+    results_all.to_csv(OUT, index=False)
 
     pd.set_option("display.width", 160)
+    print(f"{args.split} split, {gold['ticker'].nunique()} companies, {len(gold)} values")
     print(summarize(results, ["extractor"]).to_string(index=False))
     print()
     print(summarize(results, ["extractor", "metric"]).to_string(index=False))
-    print(f"\nrow-level results saved to {args.out}")
+    print(f"\nrow-level results saved to {OUT}")
 
 
 if __name__ == "__main__":

@@ -16,7 +16,7 @@ from pathlib import Path
 import pandas as pd
 import pymupdf
 
-from src.read.find_pages import RAW, SOURCES, TEST_SOURCES, read_sources
+from src.read.find_pages import RAW, SOURCES
 from src.read.text_utils import SPACES, normalize, unit_scale
 
 WORD = re.compile(r"[a-z0-9]+")
@@ -25,7 +25,7 @@ CHECKS = ["page_ok", "quote_on_page", "value_in_quote", "unit_ok"]
 
 @cache
 def pdf_files() -> dict[str, str]:
-    sources = read_sources([SOURCES, TEST_SOURCES])
+    sources = pd.read_csv(SOURCES)
     return dict(zip(sources["euronext_ticker"], sources["file_name"]))
 
 

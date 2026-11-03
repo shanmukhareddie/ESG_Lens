@@ -28,30 +28,30 @@ Choices, and why:
 
 ## Results
 
-€100m in the CAC 40, weighted by market cap, FY2025 emissions, before any estimates:
+€100m in the CAC 40, weighted by market cap, FY2025 emissions. The range comes from the two
+estimated Scope 3 figures (ArcelorMittal and Eurofins, see `docs/estimation.md`); every other
+figure is reported.
 
-| Metric | Value | Coverage (share of portfolio value) |
-|---|---|---|
-| PAI 1 scope 1 | 6,144 tCO2e | reported 95% |
-| PAI 1 scope 2 | 968 tCO2e | reported 95% |
-| PAI 1 scope 3 | 52,171 tCO2e | reported 91% |
-| PAI 1 total | 55,826 tCO2e | reported 91% |
-| PAI 2 carbon footprint | 616 tCO2e / €m invested | reported 91% |
-| PAI 3 GHG intensity | 1,328 tCO2e / €m revenue | reported 91% |
-| WACI (scope 1+2) | 110 tCO2e / €m revenue | reported 93% |
+| Metric | Value | Range (P10 to P90) | Coverage (share of portfolio value) |
+|---|---|---|---|
+| PAI 1 scope 1 | 6,211 tCO2e | | reported 100% |
+| PAI 1 scope 2 | 1,224 tCO2e | | reported 100% |
+| PAI 1 scope 3 | 58,165 tCO2e | 56,280 to 69,326 | reported 98%, estimated 2% |
+| PAI 1 total | 65,600 tCO2e | 63,715 to 76,761 | reported 98%, estimated 2% |
+| PAI 2 carbon footprint | 656 tCO2e / €m invested | 637 to 768 | reported 98%, estimated 2% |
+| PAI 3 GHG intensity | 1,426 tCO2e / €m revenue | 1,407 to 1,537 | reported 98%, estimated 2% |
+| WACI (scope 1+2) | 136 tCO2e / €m revenue | | reported 100% |
 
-The total is lower than the sum of the three scopes because it counts only holdings with all
-three scopes. The 9% not covered are six companies whose values wait for review (Vinci, the
-largest at 2.5% of the portfolio, is under review in full), plus ArcelorMittal and Eurofins,
-which publish no Scope 3 table.
+The range is lopsided: the estimates are on a log scale, so the P90 is further from the median
+than the P10.
 
-**Scope 3 changes the story.** It is 93% of financed emissions. Airbus (6.5% of the portfolio)
-accounts for 35% of financed emissions, because its Scope 3 counts the fuel burnt by every
-aircraft it sells over their lifetime (493 Mt), and TotalEnergies (7.8%) for another 22%.
-WACI stops at Scope 2 and gives a different picture: Airbus falls to 0.5% of it, while Air
-Liquide, whose own plants emit 34 Mt of Scope 1 and 2, is 59% of the WACI, ahead of
-TotalEnergies at 21%. A portfolio manager who steers on WACI and one who steers on PAI 1
-would sell different stocks.
+**Scope 3 changes the story.** It is 89% of financed emissions. Airbus (6.5% of the portfolio)
+accounts for 30% of financed emissions, because its Scope 3 counts the fuel burnt by every
+aircraft it sells over their lifetime (493 Mt), and TotalEnergies (7.8%) for another 19%.
+WACI stops at Scope 2 and gives a different picture: Airbus falls to 0.4% of it, while Air
+Liquide, whose own plants emit 34 Mt of Scope 1 and 2, is 44% of the WACI, ahead of
+ArcelorMittal (23%, its steel plants emit 99 Mt) and TotalEnergies (16%). A portfolio manager
+who steers on WACI and one who steers on PAI 1 would sell different stocks.
 
 Check by hand, Airbus: €6.46m held / €164,175m EVIC × 493,302,000 tCO2e = 19,420 tCO2e.
 
@@ -60,4 +60,5 @@ Check by hand, Airbus: €6.46m held / €164,175m EVIC × 493,302,000 tCO2e = 1
 - Market caps were fetched in October 2026, not at the fiscal year end that SFDR asks for.
 - Pernod Ricard's fiscal year ends in June, so its "2025" covers July 2025 to June 2026.
 - Scope 3 is the least comparable figure: companies choose which categories to count, and
-  Saint-Gobain and Sanofi each print two different Scope 3 totals.
+  Saint-Gobain, Sanofi and Veolia each print two different Scope 3 totals.
+- The two estimated Scope 3 figures are uncertain by a factor of about 20 between P10 and P90.

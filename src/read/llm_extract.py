@@ -3,11 +3,9 @@
 Every reply is cached in data/llm_cache/, so re-running never pays for the same call twice.
 
 Usage:
-    python -m src.read.llm_extract                 # the 12 gold-set companies
+    python -m src.read.llm_extract                 # the 12 development companies of the gold set
     python -m src.read.llm_extract --tickers BN    # one company
     python -m src.read.llm_extract --all           # every report
-    python -m src.read.llm_extract --sources data/cac40_fy2025_sources.csv data/test_sources.csv \
-        --tickers SNCF --out data/processed/test/llm_extractions.csv
 """
 
 import argparse
@@ -23,7 +21,7 @@ import pymupdf
 from dotenv import load_dotenv
 from pydantic import ValidationError
 
-from src.read.find_pages import RAW, SOURCES, rank_pages, read_sources
+from src.read.find_pages import GOLD, RAW, SOURCES, rank_pages
 from src.read.schema import EmissionRecord
 from src.read.text_utils import layout_text, load_taxonomy
 from src.validate.evidence import check
@@ -33,7 +31,6 @@ PAGES_PER_REPORT = 4
 PROMPT_BUDGET = 11000   # characters of page text, about 4,000 tokens: the free tier allows 8,000 per minute
 CACHE = Path("data/llm_cache")
 OUT = Path("data/processed/llm_extractions.csv")
-GOLD = Path("data/gold/gold_labels.csv")
 PAUSE = 2.0
 
 SYSTEM_PROMPT = """Act as a Data Scientist and extract greenhouse gas emissions from the sustainability statement of a company's annual report.
@@ -155,17 +152,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tickers", nargs="+")
     parser.add_argument("--all", action="store_true")
-    parser.add_argument("--sources", nargs="+", default=[SOURCES])
     parser.add_argument("--out", type=Path, default=OUT)
     args = parser.parse_args()
 
     load_dotenv()
     client = groq.Groq()
-    sources = read_sources(args.sources)
+    sources = pd.read_csv(SOURCES)
     if args.tickers:
         sources = sources[sources["euronext_ticker"].isin(args.tickers)]
     elif not args.all:
-        sources = sources[sources["euronext_ticker"].isin(pd.read_csv(GOLD)["ticker"].unique())]
+        gold = pd.read_csv(GOLD)
+        sources = sources[sources["euronext_ticker"].isin(gold.loc[gold["split"] == "dev", "ticker"])]
 
     rows = []
     for r in sources.itertuples():

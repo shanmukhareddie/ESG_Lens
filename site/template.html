@@ -269,7 +269,7 @@ function renderStats() {
   const waci = DATA.portfolio.metrics.find(m => m.metric.startsWith("WACI"));
   const t2 = DATA.accuracy.sets.test2?.rows.find(r => r.extractor.startsWith("llm"));
   const cells = [
-    ["Figures with page evidence", fmt(values), `${waiting} more in review`],
+    ["Figures with page evidence", fmt(values), waiting ? `${waiting} more in review` : "all checked"],
     ["Companies", DATA.companies.length, "CAC 40"],
     ["LLM on unseen reports", t2 ? `${t2.correct}/${t2.gold}` : "–", "values right"],
     ["Portfolio WACI", waci ? fmt(waci.value) : "–", "tCO2e per €m revenue"],
@@ -325,6 +325,15 @@ function renderSheet(ticker) {
         <span class="src">“${esc(t.quote)}” · <a href="${esc(t.url)}" target="_blank" rel="noopener">p. ${t.page}</a></span></li>`).join("")}</ul></section>`
     : `<section><h3>Climate targets</h3><p class="lede">No absolute reduction target on the company's own emissions was found in the report.</p></section>`;
 
+  const est = c.estimates.filter(e => e.year === 2025);
+  const estimated = est.length ? `<section><h3>Estimated, not reported</h3>
+      <p class="lede">The report gives no figure for ${est.map(e => METRICS.find(m => m[0] === e.metric)[1]).join(", ")}.
+        The gap model estimates it from the company's size, sector and its own Scope 1 + 2.</p>
+      <div class="tablewrap"><table><thead><tr><th>Metric</th><th class="r">Likely (P50)</th><th class="r">Range (P10 to P90)</th></tr></thead>
+      <tbody>${est.map(e => `<tr><td>${METRICS.find(m => m[0] === e.metric)[1]}, 2025</td>
+        <td class="r num">${tonnes(e.p50)}</td><td class="r num">${tonnes(e.p10)} to ${tonnes(e.p90)}</td></tr>`).join("")}</tbody>
+      </table></div></section>` : "";
+
   const waiting = c.waiting ? `<p class="note"><b>${c.waiting} values in review.</b> The two extractors disagree on them, or the totals do not add up, so they are not shown until a person checks them.</p>` : "";
 
   $("sheet").innerHTML = `
@@ -342,10 +351,11 @@ function renderSheet(ticker) {
     ${waiting}
     ${rows ? `<section>
       <h3>Emissions, tCO2e</h3>
-      <div class="keys"><span><i class="dot d-verified"></i>checked by hand</span><span><i class="dot d-agreed"></i>both extractors agree</span><span><i class="dot d-llm_only"></i>one extractor only</span></div>
+      <div class="keys"><span><i class="dot d-verified"></i>checked or reviewed by hand</span><span><i class="dot d-agreed"></i>both extractors agree</span></div>
       <div class="tablewrap"><table>
         <thead><tr><th>Metric</th><th class="r">2025</th><th class="r">2024</th><th>Report page</th></tr></thead>
         <tbody>${rows}</tbody></table></div></section>` : ""}
+    ${estimated}
     ${targets}`;
   renderList();
 }
@@ -416,8 +426,10 @@ function renderAccuracy() {
         A value counts as right within 0.5% or the rounding of its printed unit.</p></div>
     <div class="sets">${sets}</div>
     <div><h3 style="font-size:16px">Combining the two</h3>
-      <p class="lede" style="margin:4px 0 8px">Measured on the development companies. Agreed and single-source values are accepted;
-        disagreements go to a person, because there either side is right less than half the time.</p>
+      <p class="lede" style="margin:4px 0 8px">Measured on the development companies. Values both extractors agree on are accepted.
+        Values only one extractor found looked as safe here, but a review of the other companies found 15 of 70 wrong,
+        so they go to a person, like disagreements, where either side is right less than half the time.
+        Every figure on this site is checked by hand, reviewed, or agreed by both extractors.</p>
       <div class="tablewrap"><table><thead><tr><th>When</th><th>Value taken from</th><th class="r">Values</th><th class="r">Right</th></tr></thead>
       <tbody>${merge}</tbody></table></div></div>`;
 }

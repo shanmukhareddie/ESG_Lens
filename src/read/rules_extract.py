@@ -5,9 +5,7 @@ figures is a table row, its label is the text left of the first figure, and each
 figure gets the year of the header column above it.
 
 Usage:
-    python -m src.read.rules_extract       # writes data/processed/rules_extractions.csv
-    python -m src.read.rules_extract --sources data/cac40_fy2025_sources.csv data/test_sources.csv \
-        --tickers SNCF --out data/processed/test/rules_extractions.csv
+    python -m src.read.rules_extract       # every report, to data/processed/rules_extractions.csv
 """
 
 import argparse
@@ -17,7 +15,7 @@ from pathlib import Path
 import pandas as pd
 import pymupdf
 
-from src.read.find_pages import RAW, SOURCES, rank_pages, read_sources
+from src.read.find_pages import RAW, SOURCES, rank_pages
 from src.read.text_utils import (
     Word,
     dominant_unit_scale,
@@ -157,12 +155,11 @@ def extract_company(ticker: str, file_name: str, language: str) -> list[dict]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sources", nargs="+", default=[SOURCES])
     parser.add_argument("--tickers", nargs="+")
     parser.add_argument("--out", type=Path, default=OUT)
     args = parser.parse_args()
 
-    sources = read_sources(args.sources)
+    sources = pd.read_csv(SOURCES)
     if args.tickers:
         sources = sources[sources["euronext_ticker"].isin(args.tickers)]
     rows = []

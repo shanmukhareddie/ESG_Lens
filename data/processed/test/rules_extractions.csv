@@ -1,7 +1,0 @@
-ticker,metric,year,value,unit_as_printed,page,quote,page_ok,quote_on_page,value_in_quote,unit_ok,value_tco2e,evidence_ok
-SNCF,ghg_scope1,2024,104761.0,tCO2e,77,"Scope 1 GHG emissions - Buildings 150,810 104,761 103,598",True,True,True,True,104761,True
-SNCF,ghg_scope1,2025,103598.0,tCO2e,77,"Scope 1 GHG emissions - Buildings 150,810 104,761 103,598",True,True,True,True,103598,True
-SNCF,ghg_scope2_location,2024,36934.0,tCO2e,77,"Scope 2 GHG emissions - Buildings - Location-based 41,207 36,934 35,363",True,True,True,True,36934,True
-SNCF,ghg_scope2_location,2025,35363.0,tCO2e,77,"Scope 2 GHG emissions - Buildings - Location-based 41,207 36,934 35,363",True,True,True,True,35363,True
-SNCF,ghg_scope3,2024,37329.0,tCO2e,77,"Scope 3 GHG emissions - Buildings 48,680 37,329 36,142",True,True,True,True,37329,True
-SNCF,ghg_scope3,2025,36142.0,tCO2e,77,"Scope 3 GHG emissions - Buildings 48,680 37,329 36,142",True,True,True,True,36142,True

@@ -14,10 +14,9 @@ import pymupdf
 
 from src.read.text_utils import normalize, unit_scale
 
-SOURCES = Path("data/cac40_fy2025_sources.csv")
-TEST_SOURCES = Path("data/test_sources.csv")       # held-out reports outside the CAC 40
+SOURCES = Path("data/sources.csv")     # the CAC 40 reports, and test reports outside it (in_cac40 False)
 RAW = Path("data/raw")
-LABELS = [Path("data/gold/gold_labels.csv"), Path("data/gold/test_labels.csv")]
+GOLD = Path("data/gold/gold_labels.csv")
 TOP_N = 5
 
 # A page only has to mention a metric to count, so these are looser than the taxonomy rules.
@@ -30,10 +29,6 @@ MENTIONS = [
     r"total.{0,40}market|market.{0,40}total",
 ]
 BIG_NUMBER = re.compile(r"\b\d{1,3}(?:[ ,.\u202f]\d{3})+\b")
-
-
-def read_sources(paths=(SOURCES,)) -> pd.DataFrame:
-    return pd.concat([pd.read_csv(p) for p in paths if Path(p).exists()], ignore_index=True)
 
 
 def score_page(text: str) -> int:
@@ -68,9 +63,9 @@ def main() -> None:
     parser.add_argument("--top", type=int, default=TOP_N)
     args = parser.parse_args()
 
-    labelled = pd.concat([pd.read_csv(p) for p in LABELS]).groupby("ticker")["pdf_page"].agg(set)
+    labelled = pd.read_csv(GOLD).groupby("ticker")["pdf_page"].agg(set)
     found = 0
-    for r in read_sources([SOURCES, TEST_SOURCES]).itertuples():
+    for r in pd.read_csv(SOURCES).itertuples():
         path = RAW / r.file_name
         if not path.exists():
             print(f"{r.euronext_ticker:6s} report not found")

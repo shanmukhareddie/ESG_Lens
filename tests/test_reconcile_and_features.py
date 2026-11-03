@@ -51,3 +51,25 @@ def test_features_one_row_per_company_year_with_gaps():
     assert df.loc[("A", 2025), "log_employees"] == 3
     assert pd.isna(df.loc[("B", 2025), "log_market_cap"])      # a zero is not logged
     assert df.loc[("A", 2025), "n_reported"] == 1
+
+
+def test_reviewer_decisions_and_added_rows_survive_a_rebuild(tmp_path, monkeypatch):
+    from src.validate import reconcile
+
+    monkeypatch.setattr(reconcile, "QUEUE", tmp_path / "queue.csv")
+    rules = frame([("A", "ghg_scope1", 2025, 100, 1, "row a")])
+    llm = frame([("A", "ghg_scope1", 2025, 900, 2, "row b")])
+    df = candidates(rules, llm).assign(reason="extractors disagree", needs_review=True)
+    queue = reconcile.review_queue(df)
+    queue.loc[0, ["decision", "value_tco2e", "page", "quote"]] = ["manual", 150, 3, "row c"]
+    extra = {"ticker": "A", "metric": "ghg_scope3", "year": 2025, "decision": "manual",
+             "value_tco2e": 5000, "page": 4, "quote": "row d"}
+    pd.concat([queue, pd.DataFrame([extra])]).to_csv(reconcile.QUEUE, index=False)
+
+    queue = reconcile.review_queue(df)                    # rebuilt from scratch, decisions kept
+    assert len(queue) == 2
+    added = queue[queue["metric"] == "ghg_scope3"].iloc[0]
+    assert added["reason"] == "added by reviewer"
+    out = reconcile.accepted(df, queue, frame([])).set_index("metric")
+    assert out.loc["ghg_scope1", "value_tco2e"] == 150 and out.loc["ghg_scope1", "quote"] == "row c"
+    assert out.loc["ghg_scope3", "value_tco2e"] == 5000

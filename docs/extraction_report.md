@@ -9,23 +9,24 @@ rule-based parser and an LLM (Groq).
 
 ## Data
 
-- **Reports.** 40 companies, one report each (`data/cac40_fy2025_sources.csv`). 38 are full
+- **Reports.** 40 companies, one report each (`data/sources.csv`, where `in_cac40` is true). 38 are full
   FY2025 reports with an ESRS sustainability statement. ArcelorMittal and Eurofins are
   Luxembourg issuers not yet under the CSRD; their sustainability reports have no ESRS E1-6
   table and are marked `partial`. Pernod Ricard's fiscal year ends in June, so its FY2025 is
   July 2025 to June 2026.
-- **Gold labels.** 143 emissions values for 12 companies (`data/gold/gold_labels.csv`): Scope 1,
+- **Gold labels.** 143 emissions values for 12 companies (`data/gold/gold_labels.csv`, split `dev`): Scope 1,
   Scope 2 location- and market-based, Scope 3 and both totals, for 2025 and 2024. Each label
   was read from the rendered page and stores the page and row text. For every company and
   year, Scope 1 + Scope 2 (market) + Scope 3 equals the reported total within 0.1%, which
   rules out transcription errors.
-- **Gold targets.** 19 climate targets for 11 companies (`data/gold/gold_targets.csv`): scope,
+- **Gold targets.** 26 climate targets for 11 companies (`data/gold/gold_targets.csv`): scope,
   base year, target year and percentage cut. Only absolute targets on the company's own
   emissions are kept. BNP Paribas has none (its targets cover its lending and investment
   portfolios), so it does not appear.
 - **Test labels.** 46 values for 4 companies that were not looked at while building either
-  extractor (`data/gold/test_labels.csv`): Schneider Electric, Saint-Gobain, Kering (in French)
-  and SNCF, a state-owned group outside the CAC 40 (`data/test_sources.csv`). Saint-Gobain does
+  extractor (`data/gold/gold_labels.csv`, split `test1`): Schneider Electric, Saint-Gobain, Kering
+  (in French) and SNCF, a state-owned group outside the CAC 40 (in `data/sources.csv` with
+  `in_cac40` false). A second test set of 48 values is split `test2` (`docs/second_test_set.md`). Saint-Gobain does
   not print its 2024 totals, so it has 10 values. Every total equals Scope 1 + 2 + 3.
 
 ## Method
@@ -90,7 +91,7 @@ disagreements to a person.
 
 ## Held-out test
 
-Scored on the 46 test values (`python -m src.validate.evaluate --gold data/gold/test_labels.csv ...`).
+Scored on the 46 test values (`python -m src.validate.evaluate --split test1`).
 Nothing was changed after seeing these results.
 
 | Extractor | Correct | Precision | Recall | Missed | Wrong unit | Wrong value |
@@ -138,8 +139,9 @@ Measured on the gold companies:
 | they disagree: the rules value | 17 | 47% |
 | they disagree: the LLM value | 17 | 18% |
 
-So agreed and single-source values are accepted, and a disagreement goes to a person, since
-neither side is reliable there. Values are also held for review when a company's total does not
+So agreed values are accepted, and a disagreement goes to a person, since neither side is
+reliable there. Single-source values were at first accepted too, on the strength of 18 out of
+18; the review below showed that was wrong. Values are also held for review when a company's total does not
 equal Scope 1 + 2 + 3 within 5%: Accor's LLM values fail this check (690 + 2,767 + 4,042 kt
 against a total of 6,849 kt), and so do the SBTi-scope totals the LLM reads for Saint-Gobain's
 2024, which do not match the hand-labelled scopes. Hand-labelled values always win.
@@ -152,8 +154,45 @@ cannot see it, because the baseline column adds up too. `--review DG` sends all 
 values to a person. On the gold set, the companies with a disagreement were no more likely to
 have a wrong agreed value, so whole-company review is not triggered automatically.
 
-The result is 396 values for 39 companies, with 58 values in 9 companies waiting in
-`data/review/review_queue.csv`.
+## The review
+
+Every queued value was checked on its page, and so was every value only one extractor found.
+Four companies were reviewed in full after one wrong value turned up. The review changed 17 of
+the 396 values that had been accepted:
+
+| Accepted as | Values | Wrong |
+|---|---|---|
+| both extractors agree | 149 | 2 |
+| only one extractor found it | 70 | 15 |
+
+Single-source values were right 18 times out of 18 on the gold companies but only 55 times out
+of 70 elsewhere, so they now always go to review. The errors are the instructive part:
+
+- *Crédit Agricole*: the report holds the sustainability statements of both Crédit Agricole S.A.
+  (the listed company) and the wider, unlisted Crédit Agricole Group, with the same section
+  numbers. The LLM read the Group's table.
+- *Pernod Ricard*: the columns are FY22, FY25 and FY26, and the project's FY2025 is July 2025 to
+  June 2026, which Pernod calls FY26. The LLM took FY25 as 2025 for all six metrics.
+- *Bouygues*: a reference-year column comes first, then 2024, then 2025 split by business
+  segment. The LLM took the reference year as 2024 and 2024 as 2025.
+- *Accor*: the table has a "Total Accor" and an "SBTi scope" total; the LLM took the SBTi one, and
+  also filed the single (market-based) total as location-based.
+- *Unibail-Rodamco-Westfield*: three perimeters (CSRD, operational control, the "Better Places"
+  target perimeter) and a restated 2024. Values were mixed across them; the CSRD table is used.
+- *Eurofins*: a Scope 1 + 2 subtotal was taken as the total.
+
+Choices made in the review, recorded in the queue: the complete Scope 3 where two are printed
+(Veolia with its voluntary concessions scope, as for Saint-Gobain and Sanofi); Thales' restated
+2024 rather than its 2024 pro forma; Bureau Veritas' ESRS table in thousands of tonnes rather
+than the exact figure in an annex. A reviewer can also add a printed figure that no extractor
+found: 13 were added this way (Pernod Ricard's FY25 column, Eurofins' 2025 Scope 1 and 2,
+ArcelorMittal's Scope 2).
+
+The result is 461 values for all 40 companies: 177 labelled by hand, 143 agreed by both
+extractors, 141 reviewed. In all 145 company-years with a total, the total equals Scope 1 + 2 + 3
+within 1.3% (rounding in the reports), except two explained cases: Hermès' market-based total
+(3.3%, built from its contractual-instrument figures) and Unibail's location-based total
+(2.7%, its Scope 3 comes in location- and market-based versions).
 
 ## What made it hard
 
@@ -174,8 +213,8 @@ The result is 396 values for 39 companies, with 58 values in 9 companies waiting
 
 ## Next
 
-- Review the 58 queued values, Vinci's included.
-- Label a new held-out set to measure the extractors after the fixes.
-- Estimate the missing values (Eurofins Scope 3, partial disclosures) with a model that
-  returns a range rather than one number.
-- Investor metrics (PAI 1-3, WACI) on the cleaned data: see `docs/portfolio_metrics.md`.
+- Teach the LLM prompt the three layouts the review found (a reference-year column, two
+  entities in one report, fiscal years named by their end), then measure it on a new
+  held-out set.
+- Missing values are estimated in `docs/estimation.md`; investor metrics are in
+  `docs/portfolio_metrics.md`.

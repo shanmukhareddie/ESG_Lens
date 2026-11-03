@@ -24,17 +24,18 @@ from src.validate.reconcile import LLM, RULES, candidates, passed, precision_by_
 
 TEMPLATE = Path("site/template.html")
 OUT = Path("site/index.html")
-SOURCES = Path("data/cac40_fy2025_sources.csv")
+SOURCES = Path("data/sources.csv")
 COMPANIES = Path("data/companies.csv")
 EMISSIONS = Path("data/processed/emissions.csv")
 TARGETS = Path("data/processed/targets.csv")
+ESTIMATES = Path("data/processed/estimates.csv")
 QUEUE = Path("data/review/review_queue.csv")
-SCORES = {
-    "dev": ("Development set", "12 companies, used while building the extractors", "data/processed/evaluation.csv"),
+EVALUATION = Path("data/processed/evaluation.csv")
+SPLITS = {
+    "dev": ("Development set", "12 companies, used while building the extractors"),
     "test1": ("Test set 1", ("4 companies. Re-scored after fixing the two bugs they revealed, so no longer blind; "
-                             "the first, blind run gave rules 28/46 and LLM 36/46"), "data/processed/test/evaluation.csv"),
-    "test2": ("Test set 2", "4 new companies, scored once on the fixed extractors",
-              "data/processed/test2/evaluation.csv"),
+                             "the first, blind run gave rules 28/46 and LLM 36/46")),
+    "test2": ("Test set 2", "4 new companies, scored once on the fixed extractors"),
 }
 REPO = "https://github.com/shanmukhareddie/ESG_Lens"
 
@@ -53,11 +54,12 @@ def companies_data() -> list[dict]:
     companies = pd.read_csv(COMPANIES).set_index("ticker")
     emissions = pd.read_csv(EMISSIONS)
     targets = pd.read_csv(TARGETS, dtype={"scope": str}) if TARGETS.exists() else pd.DataFrame(columns=["ticker"])
-    queue = pd.read_csv(QUEUE) if QUEUE.exists() else pd.DataFrame(columns=["ticker"])
-    waiting = queue.groupby("ticker").size()
+    queue = pd.read_csv(QUEUE, dtype={"decision": str}) if QUEUE.exists() else pd.DataFrame(columns=["ticker", "decision"])
+    waiting = queue[queue["decision"].fillna("").str.strip() == ""].groupby("ticker").size()
+    estimates = pd.read_csv(ESTIMATES) if ESTIMATES.exists() else pd.DataFrame(columns=["ticker"])
 
     out = []
-    for ticker, s in sources.iterrows():
+    for ticker, s in sources[sources["in_cac40"]].iterrows():
         c = companies.loc[ticker]
         link = s["fy2025_link"]
         values = [{"metric": r.metric, "year": int(r.year), "value": r.value_tco2e, "status": r.status,
@@ -73,6 +75,8 @@ def companies_data() -> list[dict]:
             "revenue": clean(c["revenue"]), "market_cap": clean(c["market_cap"]), "employees": clean(c["employees"]),
             "report": link, "report_status": s["doc_status"], "waiting": int(waiting.get(ticker, 0)),
             "values": values, "targets": goals,
+            "estimates": [{"metric": r.metric, "year": int(r.year), "p10": r.p10, "p50": r.p50, "p90": r.p90}
+                          for r in estimates[estimates["ticker"] == ticker].itertuples()],
         })
     return sorted(out, key=lambda c: c["short"].lower())
 
@@ -103,14 +107,14 @@ def portfolio_data() -> dict:
 
 def accuracy_data() -> dict:
     sets = {}
-    for key, (title, note, path) in SCORES.items():
-        if not Path(path).exists():
-            continue
-        s = summarize(pd.read_csv(path), ["extractor"])
+    results = pd.read_csv(EVALUATION)
+    for key, (title, note) in SPLITS.items():
+        s = summarize(results[results["split"] == key], ["extractor"])
         sets[key] = {"title": title, "note": note, "rows": [
             {"extractor": r.extractor, "gold": int(r.gold), "correct": int(r.correct),
              "precision": clean(r.precision), "recall": r.recall} for r in s.itertuples()]}
-    merge = precision_by_status(candidates(passed(RULES), passed(LLM)), pd.read_csv(GOLD))
+    gold = pd.read_csv(GOLD)
+    merge = precision_by_status(candidates(passed(RULES), passed(LLM)), gold[gold["split"] == "dev"])
     return {"sets": sets, "merge": merge.to_dict("records")}
 
 

@@ -207,6 +207,7 @@ def main() -> None:
     load_dotenv()
     client = groq.Groq()
     sources = pd.read_csv(SOURCES)
+    sources = sources[sources["in_cac40"]]
     if args.tickers:
         sources = sources[sources["euronext_ticker"].isin(args.tickers)]
 

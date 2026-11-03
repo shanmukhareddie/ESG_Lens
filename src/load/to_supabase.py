@@ -7,11 +7,16 @@ Usage:
     python -m src.load.to_supabase companies
     python -m src.load.to_supabase metrics data/gold/gold_labels.csv
     python -m src.load.to_supabase metrics data/processed/emissions.csv
+    python -m src.load.to_supabase estimates data/processed/estimates.csv
 
 A metrics file needs ticker, metric, year, value_tco2e, page and quote (pdf_page and
 row_text are accepted too). Rows that failed the evidence checks are not loaded.
 With --replace, rows of the same source that are no longer in the file are deleted, so a
 value sent back to review leaves the database too.
+
+Estimates are stored as source 'estimated': the P50 as the value, P10 and P90 as
+confidence_low and confidence_high. They never overwrite a reported value, and the
+estimates file replaces all earlier estimates.
 """
 
 import argparse
@@ -23,7 +28,7 @@ import pandas as pd
 import psycopg
 from dotenv import load_dotenv
 
-SOURCES = Path("data/cac40_fy2025_sources.csv")
+SOURCES = Path("data/sources.csv")
 COMPANIES = Path("data/companies.csv")
 
 UPSERT_COMPANY = """
@@ -45,6 +50,16 @@ UPSERT_METRIC = """
         pdf_url = EXCLUDED.pdf_url, extracted_at = EXCLUDED.extracted_at
 """
 
+
+UPSERT_ESTIMATE = """
+    INSERT INTO metrics (company_id, metric_name, year, value, unit, source, confidence_low,
+                         confidence_high, extracted_at)
+    VALUES (%s, %s, %s, %s, 'tCO2e', 'estimated', %s, %s, %s)
+    ON CONFLICT (company_id, metric_name, year) DO UPDATE SET
+        value = EXCLUDED.value, confidence_low = EXCLUDED.confidence_low,
+        confidence_high = EXCLUDED.confidence_high, extracted_at = EXCLUDED.extracted_at
+    WHERE metrics.source = 'estimated'
+"""
 
 DELETE_STALE = """
     DELETE FROM metrics m
@@ -95,6 +110,7 @@ def load_metrics(con: psycopg.Connection, csv: Path, source: str = "reported",
     df = df.dropna(subset=["value_tco2e"])
 
     ids = company_ids(con)
+    df = df[df["ticker"].isin(ids)]          # test reports outside the CAC 40 are not in the database
     urls = pd.read_csv(SOURCES).set_index("euronext_ticker")["fy2025_link"]
     now = datetime.now(UTC).replace(tzinfo=None)
     rows = [
@@ -111,6 +127,20 @@ def load_metrics(con: psycopg.Connection, csv: Path, source: str = "reported",
     return len(rows), skipped, deleted
 
 
+def load_estimates(con: psycopg.Connection, csv: Path) -> tuple[int, int]:
+    df = pd.read_csv(csv)
+    ids = company_ids(con)
+    now = datetime.now(UTC).replace(tzinfo=None)
+    rows = [(ids[r.ticker], r.metric, int(r.year), float(r.p50), float(r.p10), float(r.p90), now)
+            for r in df.itertuples()]
+    with con.cursor() as cur:
+        cur.executemany(UPSERT_ESTIMATE, rows)
+        keys = list(zip(*[r[:3] for r in rows])) or [[], [], []]
+        cur.execute(DELETE_STALE, ("estimated", *map(list, keys)))
+        deleted = cur.rowcount
+    return len(rows), deleted
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="table", required=True)
@@ -119,11 +149,16 @@ def main() -> None:
     metrics.add_argument("csv", type=Path)
     metrics.add_argument("--source", default="reported", choices=["reported", "estimated"])
     metrics.add_argument("--replace", action="store_true", help="delete rows of this source not in the file")
+    estimates = sub.add_parser("estimates")
+    estimates.add_argument("csv", type=Path)
     args = parser.parse_args()
 
     with connect() as con:   # a single transaction: either every row is written or none
         if args.table == "companies":
             print(f"upserted {load_companies(con)} companies")
+        elif args.table == "estimates":
+            n, deleted = load_estimates(con, args.csv)
+            print(f"upserted {n} estimates from {args.csv}, deleted {deleted} older ones")
         else:
             n, skipped, deleted = load_metrics(con, args.csv, args.source, args.replace)
             print(f"upserted {n} metrics from {args.csv}" + (f", skipped {skipped} that failed checks" if skipped else "")
